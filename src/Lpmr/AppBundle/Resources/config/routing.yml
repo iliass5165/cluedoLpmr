@@ -1,0 +1,3 @@
+lpmr_app_homepage:
+    path:     /
+    defaults: { _controller: LpmrAppBundle:Default:index }

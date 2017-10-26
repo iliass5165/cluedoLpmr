@@ -1,0 +1,4 @@
+services:
+#    lpmr_user.example:
+#        class: Lpmr\UserBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

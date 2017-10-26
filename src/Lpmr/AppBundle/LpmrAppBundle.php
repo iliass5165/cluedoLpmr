@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle;
+namespace Lpmr\AppBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AppBundle extends Bundle
+class LpmrAppBundle extends Bundle
 {
 }
