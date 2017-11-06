@@ -2,12 +2,47 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link href="{{asset('css/materialize.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="{{asset('css/style.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/>
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+      <nav>
+    		<div class="nav-wrapper #00c853 green">
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    		  <a href="#" class="brand-logo"><img src="{{ asset('images/pasteur.png') }}" alt="" height="64"/></a>
+    		  <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="accueil.html">Accueil</a></li>
+            <li><a href="creer_groupe.html">Groupe</a></li>
+            <li><a href="historique.html">Historique</a></li>
+            <li><a href="scenario.html">Scenario</a></li>
+            <li><a href="login.html">Connexion</a></li>
+          </ul>
+
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="accueil.html">Accueil</a></li>
+            <li><a href="creer_groupe.html">Groupe</a></li>
+            <li><a href="historique.html">Historique</a></li>
+            <li><a href="scenario.html">Scenario</a></li>
+            <li><a href="login.html">Connexion</a></li>
+          </ul>
+
+
+    		</div>
+  		</nav>
+        {% block content %}{% endblock %}
+
     </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{{asset('js/materialize.js')}}"></script>
+<script src="{{asset('js/init.js')}}"></script>
+<script>
+    $(".button-collapse").sideNav();
+</script>
+  {% block javascripts %}{% endblock %}

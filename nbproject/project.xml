@@ -3,7 +3,11 @@
     <type>org.netbeans.modules.php.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/php-project/1">
+<<<<<<< HEAD
             <name>cluedoLpmr</name>
+=======
+            <name>cluedo</name>
+>>>>>>> ef4d5fc3e89441894a75ab647c83506ca83bf65e
         </data>
     </configuration>
 </project>
