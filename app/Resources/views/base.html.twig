@@ -14,9 +14,9 @@
       <nav>
     		<div class="nav-wrapper #00c853 green">
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-    		  <a href="#" class="brand-logo"><img src="{{ asset('images/pasteur.png') }}" alt="" height="64"/></a>
+    		  <a href="{{ path('lpmr_app_homepage') }}" class="brand-logo"><img src="{{ asset('images/pasteur.png') }}" alt="" height="64"/></a>
     		  <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="accueil.html">Accueil</a></li>
+            <li><a href="{{ path('lpmr_app_homepage') }}">Accueil</a></li>
             <li><a href="creer_groupe.html">Groupe</a></li>
             <li><a href="historique.html">Historique</a></li>
             <li><a href="scenario.html">Scenario</a></li>
@@ -24,7 +24,7 @@
           </ul>
 
           <ul class="side-nav" id="mobile-demo">
-            <li><a href="accueil.html">Accueil</a></li>
+            <li><a href="{{ path('lpmr_app_homepage') }}">Accueil</a></li>
             <li><a href="creer_groupe.html">Groupe</a></li>
             <li><a href="historique.html">Historique</a></li>
             <li><a href="scenario.html">Scenario</a></li>
@@ -34,7 +34,7 @@
 
     		</div>
   		</nav>
-        {% block content %}{% endblock %}
+        {% block body %}{% endblock %}
 
     </body>
 </html>
