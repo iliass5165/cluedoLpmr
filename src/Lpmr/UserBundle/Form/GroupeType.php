@@ -13,9 +13,12 @@ class GroupeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('nbpointglobal')->add('annee')->add('code');
+        $builder->add('nom');
+                //->add('nbpointglobal')
+                //->add('annee')
+                //->add('code');
     }
-    
+
     /**
      * {@inheritdoc}
      */

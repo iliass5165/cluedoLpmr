@@ -33,13 +33,20 @@ class GroupeController extends Controller
      */
     public function newAction(Request $request)
     {
+        $chaine = ('0123456789');
+        $ref = str_shuffle(substr($chaine, 0, 8));
+        $date = new \DateTime();;
+
         $groupe = new Groupe();
+        $groupe->setAnnee($date);
+        $groupe->setCode($ref);
         $form = $this->createForm('Lpmr\UserBundle\Form\GroupeType', $groupe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($groupe);
+
             $em->flush();
 
             return $this->redirectToRoute('groupe_show', array('id' => $groupe->getId()));

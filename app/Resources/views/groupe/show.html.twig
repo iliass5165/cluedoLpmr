@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Groupe</h1>
 
-    <table>
+<div class="row">
+
+  <div class="col s12 m3 l5"></div>
+    <h1>Groupe</h1>
+  <div class="col s12 m3 l5"></div>
+</div>
+<div class="row">
+  <div class="col s12 m3 l3"></div>
+  <div class="input-field col s12 m6">
+
+    <table class="striped" >
         <tbody>
             <tr>
                 <th>Id</th>
@@ -19,7 +28,7 @@
             </tr>
             <tr>
                 <th>Annee</th>
-                <td>{% if groupe.annee %}{{ groupe.annee|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if groupe.annee %}{{ groupe.annee | date('Y') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Code</th>
@@ -28,17 +37,29 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('groupe_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('groupe_edit', { 'id': groupe.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+<p></p>
+
+
+        {{ form_start(delete_form) }}
+          <a class="btn-floating btn-large " href="{{ path('groupe_index') }}">
+            <i class="large material-icons">arrow_back</i>
+          </a>
+
+          <a class="btn-floating btn-large blue" type="submit" value="Edit" href="{{ path('groupe_edit', { 'id': groupe.id }) }}">
+            <i class="large material-icons">mode_edit</i>
+          </a>
+
+          <a class="btn-floating btn-large red" type="submit" value="Delete">
+              <i class="large material-icons">delete_forever</i>
+          </a
+        {{ form_end(delete_form) }}
+
+
+
+
+
+
+    <div class="col s12 m3 l3"></div>
+  </div>
+
 {% endblock %}
