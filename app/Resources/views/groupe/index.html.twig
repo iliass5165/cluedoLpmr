@@ -16,7 +16,6 @@
     <table  class="striped" >
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>Nbpointglobal</th>
                 <th>Annee</th>
@@ -27,20 +26,17 @@
         <tbody>
         {% for groupe in groupes %}
             <tr>
-                <td><a href="{{ path('groupe_show', { 'id': groupe.id }) }}">{{ groupe.id }}</a></td>
                 <td>{{ groupe.nom }}</td>
                 <td>{{ groupe.nbpointglobal }}</td>
-                <td>{% if groupe.annee %}{{ groupe.annee|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if groupe.annee %}{{ groupe.annee|date('Y') }}{% endif %}</td>
                 <td>{{ groupe.code }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('groupe_show', { 'id': groupe.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('groupe_edit', { 'id': groupe.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a class="btn-floating btn-large " href="{{ path('groupe_show', { 'id': groupe.id }) }}">
+                      <i class="large material-icons">info</i>
+                    </a>
+                    <a class="btn-floating btn-large blue" href="{{ path('groupe_edit', { 'id': groupe.id }) }}">
+                      <i class="large material-icons">mode_edit</i>
+                    </a>
                 </td>
             </tr>
         {% endfor %}

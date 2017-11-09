@@ -39,24 +39,29 @@
 
 <p></p>
 
+      <table>
+        <tbody>
+          <tr>
+            <a class="btn-floating btn-large " href="{{ path('groupe_index') }}">
+              <i class="large material-icons">arrow_back</i>
+            </a>
+          </tr>
+          <tr>
 
-        {{ form_start(delete_form) }}
-          <a class="btn-floating btn-large " href="{{ path('groupe_index') }}">
-            <i class="large material-icons">arrow_back</i>
-          </a>
+                <a class="btn-floating btn-large blue" href="{{ path('groupe_edit', { 'id': groupe.id }) }}">
+                  <i class="large material-icons">mode_edit</i>
+                </a>
+          </tr>
 
-          <a class="btn-floating btn-large blue" type="submit" value="Edit" href="{{ path('groupe_edit', { 'id': groupe.id }) }}">
-            <i class="large material-icons">mode_edit</i>
-          </a>
-
-          <a class="btn-floating btn-large red" type="submit" value="Delete">
-              <i class="large material-icons">delete_forever</i>
-          </a
-        {{ form_end(delete_form) }}
-
-
-
-
+          <tr>
+            {{ form_start(delete_form) }}
+              <button class="btn-floating btn-large red" type="submit" href="{{ path('groupe_edit', { 'id': groupe.id }) }}">
+                  <i class="large material-icons">delete_forever</i>
+              </button>
+            {{ form_end(delete_form) }}
+          </tr>
+        </tbody>
+      </table>
 
 
     <div class="col s12 m3 l3"></div>
