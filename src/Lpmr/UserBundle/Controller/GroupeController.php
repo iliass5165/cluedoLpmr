@@ -43,11 +43,13 @@ class GroupeController extends Controller
         if($result == null){
           $groupe = new Groupe();
           $groupe->setAnnee($date);
+          $groupe->setNbpointglobal(0);
           $groupe->setCode($code);
         }else{
           $code = str_shuffle(substr($chaine, 0, 8));
           $groupe = new Groupe();
           $groupe->setAnnee($date);
+          $groupe->setNbpointglobal(0);
           $groupe->setCode($code);
         }
 
