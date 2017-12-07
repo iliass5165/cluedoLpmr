@@ -2,6 +2,13 @@ lpmr_user_groupe:
     resource: "@LpmrUserBundle/Resources/config/routing/groupe.yml"
     prefix:   /groupe
 
+
+lpmr_user_etudiant:
+    resource: "@LpmrUserBundle/Resources/config/routing/etudiant.yml"
+    prefix:   /etudiant
+
+
+
 lpmr_user_homepage:
     path:     /
     defaults: { _controller: LpmrUserBundle:Default:index }

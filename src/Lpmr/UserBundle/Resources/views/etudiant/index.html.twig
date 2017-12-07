@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Etudiants list</h1>
+
+           {# Importation des alternants #}
+            <div class="col s12 s6 m6"></div>
+            <div class="col s12 m6 l6 ">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        {{ form_start(form, {'attr': {'id': 'form_import'}}) }}
+                        <div class="row">
+                            <div class="file-field input-field">
+                            <div class="btn">
+                            <span>Fichier CSV</span>
+                                {{ form_widget(form.submitFile) }}
+                            </div>
+                            <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+
+                        <div class="file-field input-field col s12">
+                            {{ form_widget(form.save, {'attr':{'class':'btn right'}}) }}
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>    
+                </div> 
+            </div> 
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Promotion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etudiant in etudiants %}
+            <tr>
+                <td><a href="{{ path('etudiant_show', { 'id': etudiant.id }) }}">{{ etudiant.id }}</a></td>
+                <td>{{ etudiant.nom }}</td>
+                <td>{{ etudiant.prenom }}</td>
+                <td>{{ etudiant.promotion }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('etudiant_show', { 'id': etudiant.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('etudiant_edit', { 'id': etudiant.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('etudiant_new') }}">Create a new etudiant</a>
+        </li>
+    </ul>
+{% endblock %}

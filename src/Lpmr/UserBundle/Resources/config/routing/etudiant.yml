@@ -1,0 +1,24 @@
+etudiant_index:
+    path:     /
+    defaults: { _controller: "LpmrUserBundle:Etudiant:index" }
+    methods:  [GET,POST]
+
+etudiant_show:
+    path:     /{id}/show
+    defaults: { _controller: "LpmrUserBundle:Etudiant:show" }
+    methods:  GET
+
+etudiant_new:
+    path:     /new
+    defaults: { _controller: "LpmrUserBundle:Etudiant:new" }
+    methods:  [GET, POST]
+
+etudiant_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LpmrUserBundle:Etudiant:edit" }
+    methods:  [GET, POST]
+
+etudiant_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LpmrUserBundle:Etudiant:delete" }
+    methods:  DELETE
