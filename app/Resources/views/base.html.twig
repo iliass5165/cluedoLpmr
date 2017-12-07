@@ -20,7 +20,7 @@
             <li><a href="{{ path('groupe_new') }}">Groupe</a></li>
             <li><a href="historique.html">Historique</a></li>
             <li><a href="scenario.html">Scenario</a></li>
-            {% if app.user.username != null %}
+            {% if app.user  %}
               <li><a href="login.html">Déconnexion</a></li>
             {% else %}
               <li><a href="login.html">Connexion</a></li>
@@ -33,7 +33,7 @@
             <li><a href="{{ path('groupe_new') }}">Groupe</a></li>
             <li><a href="historique.html">Historique</a></li>
             <li><a href="scenario.html">Scenario</a></li>
-            {% if app.user.username != null %}
+            {% if app.user %}
               <li><a href="login.html">Déconnexion</a></li>
             {% else %}
               <li><a href="login.html">Connexion</a></li>
