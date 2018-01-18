@@ -49,7 +49,10 @@ class Groupe
      */
     private $code;
 
-
+   /**
+    * @ORM\OneToMany(targetEntity="Etudiant", mappedBy="groupe")
+    */
+    private $etudiants;
 
     /**
      * Get id
@@ -156,4 +159,46 @@ class Groupe
     {
         return $this->code;
     }
+
+    /**
+    * Constructor
+    */
+   public function __construct()
+   {
+       $this->etudiants = new \Doctrine\Common\Collections\ArrayCollection();
+   }
+
+   /**
+    * Add etudiant
+    *
+    * @param \Lpmr\UserBundle\Entity\Etudiant $etudiant
+    *
+    * @return Groupe
+    */
+   public function addEtudiant(\Lpmr\UserBundle\Entity\Etudiant $etudiant)
+   {
+       $this->etudiants[] = $etudiant;
+
+       return $this;
+   }
+
+   /**
+    * Remove rencontre
+    *
+    * @param \Lpmr\UserBundle\Entity\Etudiant $etudiant
+    */
+   public function removeEtudiant(\Lpmr\UserBundle\Entity\Etudiant $etudiant)
+   {
+       $this->etudiants->removeElement($etudiant);
+   }
+
+   /**
+    * Get etudiants
+    *
+    * @return \Doctrine\Common\Collections\Collection
+    */
+   public function getEtudiants()
+   {
+       return $this->etudiants;
+   }
 }

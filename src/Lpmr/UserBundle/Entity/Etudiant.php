@@ -44,6 +44,12 @@ class Etudiant
 
 
     /**
+    * @ORM\ManyToOne(targetEntity="Groupe", inversedBy="groupes")
+    * @ORM\JoinColumn(nullable=true)
+    */
+   private $groupe;
+
+    /**
      * Get id
      *
      * @return int
@@ -124,5 +130,28 @@ class Etudiant
     {
         return $this->promotion;
     }
-}
 
+    /**
+     * Set groupe
+     *
+     * @param \Lpmr\UserBundle\Entity\Groupe $groupe
+     *
+     * @return Etudiant
+     */
+    public function setGroupe(\Lpmr\UserBundle\Entity\Groupe $groupe)
+    {
+        $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    /**
+     * Get equipe
+     *
+     * @return \Lpmr\UserBundle\Entity\Groupe $groupe
+     */
+    public function getGroupe()
+    {
+        return $this->groupe;
+    }
+}
