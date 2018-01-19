@@ -19,7 +19,7 @@
             <li><a href="{{ path('lpmr_app_homepage') }}">Accueil</a></li>
             <li><a href="{{ path('groupe_new') }}">Groupe</a></li>
             <li><a href="historique.html">Historique</a></li>
-            <li><a href="scenario.html">Scenario</a></li>
+            <li><a href="{{ path('scenario_index') }}">Scenario</a></li>
             {% if app.user  %}
               <li><a href="login.html">Déconnexion</a></li>
             {% else %}
@@ -32,7 +32,7 @@
             <li><a href="{{ path('lpmr_app_homepage') }}">Accueil</a></li>
             <li><a href="{{ path('groupe_new') }}">Groupe</a></li>
             <li><a href="historique.html">Historique</a></li>
-            <li><a href="scenario.html">Scenario</a></li>
+            <li><a href="{{ path('scenario_index') }}">Scenario</a></li>
             {% if app.user %}
               <li><a href="login.html">Déconnexion</a></li>
             {% else %}
