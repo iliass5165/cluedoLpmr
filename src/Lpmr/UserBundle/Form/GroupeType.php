@@ -5,6 +5,8 @@ namespace Lpmr\UserBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class GroupeType extends AbstractType
 {
@@ -13,7 +15,8 @@ class GroupeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom');
+        $builder->add('nom', TextType::class)
+                //->add('etudiants', EntityType::class,  array('class'   => 'LpmrUserBundle:Etudiant','multiple' => true, 'choice_label' => 'nom'), array('attr' => array('class' => 'input-field col s12 ')));
                 //->add('nbpointglobal')
                 //->add('annee')
                 //->add('code');
