@@ -15,7 +15,7 @@ class GroupeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom', TextType::class)
+        $builder->add('nom', TextType::class);
                 //->add('etudiants', EntityType::class,  array('class'   => 'LpmrUserBundle:Etudiant','multiple' => true, 'choice_label' => 'nom'), array('attr' => array('class' => 'input-field col s12 ')));
                 //->add('nbpointglobal')
                 //->add('annee')

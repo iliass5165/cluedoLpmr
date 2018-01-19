@@ -1,3 +1,7 @@
 lpmr_app_homepage:
     path:     /
     defaults: { _controller: LpmrAppBundle:Default:index }
+
+lpmr_app_scenario:
+    resource: "@LpmrAppBundle/Resources/config/routing/scenario.yml"
+    prefix:   /scenario
