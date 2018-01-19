@@ -1,0 +1,25 @@
+scenario_index:
+    path:     /
+    defaults: { _controller: "LpmrAppBundle:Scenario:index" }
+    methods:  [GET,POST]
+
+scenario_show:
+    path:     /{id}/show
+    defaults: { _controller: "LpmrAppBundle:Scenario:show" }
+    methods:  GET
+
+scenario_new:
+    path:     /new
+    defaults: { _controller: "LpmrAppBundle:Scenario:new" }
+    methods:  [GET, POST]
+
+scenario_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LpmrAppBundle:Scenario:edit" }
+    methods:  [GET, POST]
+
+scenario_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LpmrAppBundle:Scenario:delete" }
+    methods:  DELETE
+

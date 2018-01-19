@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="col s12 m3 l3"></div>
+      <h1>Scenario creation</h1>
+
+    <div class="row">
+      <div class="col s12 m3 l3"></div>
+      <div class="col s12 m6">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div class="col s12 m3 l3"></div>
+            <button class="btn waves-effect waves-light" type="submit" id="_submit" name="_submit">Creer
+              <i class="material-icons right">send</i>
+            </button>
+        {{ form_end(form) }}
+      <div class="col s12 m3 l3"></div>
+      <p></p>
+
+      <a class="btn-floating btn-large " href="{{ path('groupe_index') }}">
+        <i class="large material-icons">arrow_back</i>
+      </a>
+    </div>
+
+
+{% endblock %}
