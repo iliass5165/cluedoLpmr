@@ -10,5 +10,5 @@ lpmr_user_etudiant:
 
 
 lpmr_user_homepage:
-    path:     /
-    defaults: { _controller: LpmrUserBundle:Default:index }
+    resource: "@LpmrUserBundle/Resources/config/routing/groupe.yml"
+    prefix:   /
