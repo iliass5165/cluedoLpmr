@@ -2,26 +2,350 @@
 
 {% block body %}
     <h1>Scenario list</h1>
-        {% for scenario in scenarios %}
-            <div class="col s6 m3 l2">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="../../images/cluedo.jpg">
-                    </div>
-                    <div class="card-content" style="text-align:center;">
-                        <label for='{{ scenario.id }}'>{{ scenario.titre }}</label>
-                    </div>
-                    <div class="card-action" style="text-align:center;">
-                        <a class="btn-floating btn-large " href="{{ path('scenario_show', { 'id': scenario.id }) }}">
-                            <i class="large material-icons">info</i>
-                        </a>
-                        <a class="btn-floating btn-large blue" href="{{ path('scenario_edit', { 'id': scenario.id }) }}">
-                            <i class="large material-icons">mode_edit</i>
-                        </a>                    
+
+        <!-- Liste des scénarios -->
+        <div class="row">
+          <div class="col s12"></div>
+            {% for scenario in scenarios %}
+                <div class="col s12 m3 l2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="../../images/cluedo.jpg">
+                        </div>
+                        <div class="card-content" style="text-align:center;">
+                            <input name='{{ scenario.id }}' type="checkbox" id="{{ scenario.id }}" class="filled-in" />
+                            <label for='{{ scenario.id }}'>{{ scenario.titre }}</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="{{ path('scenario_show', { 'id': scenario.id }) }}">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="{{ path('scenario_edit', { 'id': scenario.id }) }}">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+        <!-- Liste des scénarios -->
+
+        <div class="row">
+          <div class="col s12"></div>
+            <ul class="collapsible blue-grey" data-collapsible="accordion">
+              <li>
+                <div class="collapsible-header "><i class="material-icons circle">highlight_off</i>Armes</div>
+                <div class="collapsible-body #eeeeee grey lighten-3" >
+                  <div class="row">
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/rj45.jpg">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Arme 1</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/rj45.jpg">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Arme 2</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/rj45.jpg">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Arme 3</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/rj45.jpg">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Arme 4</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/rj45.jpg">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Arme 5</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons circle ">room</i>Lieux</div>
+                <div class="collapsible-body #eeeeee grey lighten-3" >
+                      <div class="row">
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/map.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Lieu 1</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/map.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Lieu 2</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/map.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Lieu 3</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/map.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Lieu 4</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/map.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Lieu 5</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons circle">person</i>Personnages</div>
+                <div class="collapsible-body #eeeeee grey lighten-3" >
+                      <div class="row">
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/person.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Personnage 1</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/person.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Personnage 2</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/person.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Personnage 3</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/person.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Personnage 4</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s6 m3 l2">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/person.png">
+                        </div>
+                        <div class="card-content">
+                          <input name="group2" type="radio" id="arme1" />
+                          <label for="arme1">Personnage 5</label>
+                        </div>
+                        <div class="card-action" style="text-align:center;">
+                            <a class="btn-floating btn-large " href="">
+                                <i class="large material-icons">info</i>
+                            </a>
+                            <a class="btn-floating btn-large blue" href="">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
 
     <div class="fixed-action-btn horizontal">
         <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('scenario_new') }}"><i class="large material-icons">add</i></a>
