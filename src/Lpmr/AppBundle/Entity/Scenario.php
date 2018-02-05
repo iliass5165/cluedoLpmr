@@ -3,44 +3,44 @@
 namespace Lpmr\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * Scenario
  *
  * @ORM\Table(name="scenario")
- * @ORM\Entity(repositoryClass="Lpmr\AppBundle\Repository\ScenarioRepository")
+ * @ORM\Entity
  */
 class Scenario
 {
     /**
-     * @var int
+     * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-    /** 
+    /**
      * @var string
      *
-     * @ORM\Column(name="titre", type="string", length=255)
+     * @ORM\Column(name="titre", type="string", length=255, nullable=false)
      */
     private $titre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
+
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -95,4 +95,3 @@ class Scenario
         return $this->description;
     }
 }
-

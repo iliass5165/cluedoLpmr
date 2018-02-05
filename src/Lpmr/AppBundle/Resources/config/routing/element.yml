@@ -1,0 +1,24 @@
+element_index:
+    path:     /
+    defaults: { _controller: "LpmrAppBundle:Element:index" }
+    methods:  GET
+
+element_show:
+    path:     /{id}/show
+    defaults: { _controller: "LpmrAppBundle:Element:show" }
+    methods:  GET
+
+element_new:
+    path:     /{id}/new
+    defaults: { _controller: "LpmrAppBundle:Element:new" }
+    methods:  [GET, POST]
+
+element_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LpmrAppBundle:Element:edit" }
+    methods:  [GET, POST]
+
+element_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LpmrAppBundle:Element:delete" }
+    methods:  DELETE
