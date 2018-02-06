@@ -37,101 +37,29 @@
                 <div class="collapsible-header "><i class="material-icons circle">highlight_off</i>Armes</div>
                 <div class="collapsible-body #eeeeee grey lighten-3" >
                   <div class="row">
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/rj45.jpg">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Arme 1</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/rj45.jpg">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Arme 2</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/rj45.jpg">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Arme 3</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/rj45.jpg">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Arme 4</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/rj45.jpg">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Arme 5</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
+                    {% for element in elements %}
+                        {% if(element.fkCategorieElement.id==1) %}
+                          <div class="col s12 m3 l2">
+                              <div class="card">
+                                  <div class="card-image">
+                                      <img src="../../images/rj45.jpg">
+                                  </div>
+                                  <div class="card-content" style="text-align:center;">
+                                      <input name='{{ element.id }}' type="checkbox" id="{{ element.id }}" class="filled-in" />
+                                      <label for='{{ element.id }}'>{{ element.nom }}</label>
+                                  </div>
+                                  <div class="card-action" style="text-align:center;">
+                                      <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
+                                          <i class="large material-icons">info</i>
+                                      </a>
+                                      <a class="btn-floating btn-large blue" href="{{ path('element_edit', { 'id': element.id }) }}">
+                                          <i class="large material-icons">mode_edit</i>
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                        {% endif %}
+                    {% endfor %}
                   </div>
                   <a class="btn-floating waves-effect waves-light red"  href="{{ path('element_new', { 'id': 1 }) }}"><i class="material-icons">add</i></a>
                 </div>
@@ -139,102 +67,30 @@
               <li>
                 <div class="collapsible-header"><i class="material-icons circle ">room</i>Lieux</div>
                 <div class="collapsible-body #eeeeee grey lighten-3" >
-                      <div class="row">
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/map.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Lieu 1</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/map.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Lieu 2</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/map.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Lieu 3</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/map.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Lieu 4</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/map.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Lieu 5</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
+                  <div class="row">
+                    {% for element in elements %}
+                        {% if(element.fkCategorieElement.id==3) %}
+                          <div class="col s12 m3 l2">
+                              <div class="card">
+                                  <div class="card-image">
+                                      <img src="../../images/map.png">
+                                  </div>
+                                  <div class="card-content" style="text-align:center;">
+                                      <input name='{{ element.id }}' type="checkbox" id="{{ element.id }}" class="filled-in" />
+                                      <label for='{{ element.id }}'>{{ element.nom }}</label>
+                                  </div>
+                                  <div class="card-action" style="text-align:center;">
+                                      <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
+                                          <i class="large material-icons">info</i>
+                                      </a>
+                                      <a class="btn-floating btn-large blue" href="{{ path('element_edit', { 'id': element.id }) }}">
+                                          <i class="large material-icons">mode_edit</i>
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                        {% endif %}
+                    {% endfor %}
                   </div>
                   <a class="btn-floating waves-effect waves-light red"  href="{{ path('element_new', { 'id': 3 }) }}"><i class="material-icons">add</i></a>
                 </div>
@@ -242,102 +98,30 @@
               <li>
                 <div class="collapsible-header"><i class="material-icons circle">person</i>Personnages</div>
                 <div class="collapsible-body #eeeeee grey lighten-3" >
-                      <div class="row">
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/person.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Personnage 1</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/person.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Personnage 2</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/person.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Personnage 3</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/person.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Personnage 4</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s6 m3 l2">
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/person.png">
-                        </div>
-                        <div class="card-content">
-                          <input name="group2" type="radio" id="arme1" />
-                          <label for="arme1">Personnage 5</label>
-                        </div>
-                        <div class="card-action" style="text-align:center;">
-                            <a class="btn-floating btn-large " href="">
-                                <i class="large material-icons">info</i>
-                            </a>
-                            <a class="btn-floating btn-large blue" href="">
-                                <i class="large material-icons">mode_edit</i>
-                            </a>
-                        </div>
-                      </div>
-                    </div>
+                  <div class="row">
+                    {% for element in elements %}
+                        {% if(element.fkCategorieElement.id==2) %}
+                          <div class="col s12 m3 l2">
+                              <div class="card">
+                                  <div class="card-image">
+                                      <img src="../../images/person.png">
+                                  </div>
+                                  <div class="card-content" style="text-align:center;">
+                                      <input name='{{ element.id }}' type="checkbox" id="{{ element.id }}" class="filled-in" />
+                                      <label for='{{ element.id }}'>{{ element.nom }}</label>
+                                  </div>
+                                  <div class="card-action" style="text-align:center;">
+                                      <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
+                                          <i class="large material-icons">info</i>
+                                      </a>
+                                      <a class="btn-floating btn-large blue" href="{{ path('element_edit', { 'id': element.id }) }}">
+                                          <i class="large material-icons">mode_edit</i>
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                        {% endif %}
+                    {% endfor %}
                   </div>
                   <a class="btn-floating waves-effect waves-light red"  href="{{ path('element_new', { 'id': 2 }) }}"><i class="material-icons">add</i></a>
                 </div>

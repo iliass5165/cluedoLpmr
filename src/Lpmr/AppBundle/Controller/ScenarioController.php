@@ -12,13 +12,15 @@ class ScenarioController extends Controller
      * View all scenarios
      */
     public function indexAction()
-    {   
+    {
         $em = $this->getDoctrine()->getManager();
 
         $scenarios = $em->getRepository('LpmrAppBundle:Scenario')->findAll();
+        $elements = $em->getRepository('LpmrAppBundle:Element')->findAll();
 
         return $this->render('LpmrAppBundle:Scenario:index.html.twig', array(
             'scenarios' => $scenarios,
+            'elements' => $elements,
         ));
     }
 
@@ -30,16 +32,16 @@ class ScenarioController extends Controller
         $scenario = new Scenario();
         $form = $this->createForm('Lpmr\AppBundle\Form\ScenarioType', $scenario);
         $form->handleRequest($request);
-        
+
         if($form->isSubmitted() && $form->isValid()){
-            $em = $this->getDoctrine()->getManager();          
-            
+            $em = $this->getDoctrine()->getManager();
+
             $em->persist($scenario);
             $em->flush();
-            
+
             return $this->redirectToRoute('scenario_show', array('id' => $scenario->getId()));
         }
-        
+
         return $this->render('LpmrAppBundle:Scenario:new.html.twig', array(
             'scenario' => $scenario,
             'form' => $form->createView(),
@@ -55,7 +57,7 @@ class ScenarioController extends Controller
 
         return $this->render('LpmrAppBundle:Scenario:show.html.twig', array(
             'scenario' => $scenario,
-            'delete_form' => $deleteForm->createView(), 
+            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -63,7 +65,7 @@ class ScenarioController extends Controller
      * Edit selected scenario
      */
     public function editAction(Request $request, Scenario $scenario)
-    {      
+    {
         $deleteForm = $this->createDeleteForm($scenario);
         $editForm = $this->createForm('Lpmr\AppBundle\Form\ScenarioType', $scenario);
         $editForm->handleRequest($request);
@@ -97,7 +99,7 @@ class ScenarioController extends Controller
 
         return $this->redirectToRoute('scenario_index');
     }
-    
+
     /**
      * Creates a form to delete a scenario entity.
      *
