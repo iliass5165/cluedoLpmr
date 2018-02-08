@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new Lpmr\AppBundle\LpmrAppBundle(),
             new Lpmr\UserBundle\LpmrUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

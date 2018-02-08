@@ -49,7 +49,14 @@ class Groupe
      */
     private $code;
 
-   /**
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", nullable=false)
+     */
+    private $token;
+
+    /**
     * @ORM\OneToMany(targetEntity="Etudiant", mappedBy="groupe")
     */
     private $etudiants;
