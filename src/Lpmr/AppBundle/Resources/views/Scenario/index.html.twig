@@ -13,8 +13,8 @@
                             <img src="../../images/cluedo.jpg">
                         </div>
                         <div class="card-content" style="text-align:center;">
-                            <input name='{{ scenario.id }}' type="checkbox" id="{{ scenario.id }}" class="filled-in" />
-                            <label for='{{ scenario.id }}'>{{ scenario.titre }}</label>
+                            <input name='radio_scenarios' type="radio" value="{{ scenario.titre }}" id="sce_{{ scenario.id }}" />
+                            <label for='sce_{{ scenario.id }}'>{{ scenario.titre }}</label>
                         </div>
                         <div class="card-action" style="text-align:center;">
                             <a class="btn-floating btn-large " href="{{ path('scenario_show', { 'id': scenario.id }) }}">
@@ -29,10 +29,11 @@
             {% endfor %}
         </div>
         <!-- Liste des scénarios -->
-
+        
         <div class="row">
           <div class="col s12"></div>
             <ul class="collapsible blue-grey" data-collapsible="accordion">
+              <!-- Liste des armes -->
               <li>
                 <div class="collapsible-header "><i class="material-icons circle">highlight_off</i>Armes</div>
                 <div class="collapsible-body #eeeeee grey lighten-3" >
@@ -45,8 +46,8 @@
                                       <img src="../../images/rj45.jpg">
                                   </div>
                                   <div class="card-content" style="text-align:center;">
-                                      <input name='{{ element.id }}' type="checkbox" id="{{ element.id }}" class="filled-in" />
-                                      <label for='{{ element.id }}'>{{ element.nom }}</label>
+                                      <input name='check_armes' type="checkbox" id="arme_{{ element.id }}"   />
+                                      <label for='arme_{{ element.id }}'>{{ element.nom }}</label>
                                   </div>
                                   <div class="card-action" style="text-align:center;">
                                       <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
@@ -64,6 +65,8 @@
                   <a class="btn-floating waves-effect waves-light red"  href="{{ path('element_new', { 'id': 1 }) }}"><i class="material-icons">add</i></a>
                 </div>
               </li>
+              <!-- Liste des armes -->
+              <!-- Liste des lieux -->
               <li>
                 <div class="collapsible-header"><i class="material-icons circle ">room</i>Lieux</div>
                 <div class="collapsible-body #eeeeee grey lighten-3" >
@@ -76,8 +79,8 @@
                                       <img src="../../images/map.png">
                                   </div>
                                   <div class="card-content" style="text-align:center;">
-                                      <input name='{{ element.id }}' type="checkbox" id="{{ element.id }}" class="filled-in" />
-                                      <label for='{{ element.id }}'>{{ element.nom }}</label>
+                                      <input name='check_lieux' type="checkbox" id="lieu_{{ element.id }}" />
+                                      <label for='lieu_{{ element.id }}'>{{ element.nom }}</label>
                                   </div>
                                   <div class="card-action" style="text-align:center;">
                                       <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
@@ -95,6 +98,8 @@
                   <a class="btn-floating waves-effect waves-light red"  href="{{ path('element_new', { 'id': 3 }) }}"><i class="material-icons">add</i></a>
                 </div>
               </li>
+              <!-- Liste des lieux -->
+              <!-- liste des personages -->
               <li>
                 <div class="collapsible-header"><i class="material-icons circle">person</i>Personnages</div>
                 <div class="collapsible-body #eeeeee grey lighten-3" >
@@ -107,8 +112,8 @@
                                       <img src="../../images/person.png">
                                   </div>
                                   <div class="card-content" style="text-align:center;">
-                                      <input name='{{ element.id }}' type="checkbox" id="{{ element.id }}" class="filled-in" />
-                                      <label for='{{ element.id }}'>{{ element.nom }}</label>
+                                      <input name='check_persos' type="checkbox" id="perso_{{ element.id }}" />
+                                      <label for='perso_{{ element.id }}'>{{ element.nom }}</label>
                                   </div>
                                   <div class="card-action" style="text-align:center;">
                                       <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
@@ -126,10 +131,11 @@
                   <a class="btn-floating waves-effect waves-light red"  href="{{ path('element_new', { 'id': 2 }) }}"><i class="material-icons">add</i></a>
                 </div>
               </li>
+              <!-- liste des personnages -->
             </ul>
           </div>
         </div>
-
+        <!-- Liste des éléments -->
 
     <div class="fixed-action-btn horizontal">
         <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('scenario_new') }}"><i class="large material-icons">add</i></a>
