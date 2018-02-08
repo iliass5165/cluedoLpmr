@@ -45,6 +45,28 @@ class Element
      */
     private $fkCategorieElement;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Scenario", inversedBy="fkElement")
+     * @ORM\JoinTable(name="element_scenario",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="FK_element_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="FK_scenario_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $fkScenario;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fkScenario = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -112,7 +134,7 @@ class Element
      *
      * @return Element
      */
-    public function setFkCategorieElement($fkCategorieElement)
+    public function setFkCategorieElement(\Lpmr\AppBundle\Entity\CategorieElement $fkCategorieElement = null)
     {
         $this->fkCategorieElement = $fkCategorieElement;
 
@@ -127,5 +149,39 @@ class Element
     public function getFkCategorieElement()
     {
         return $this->fkCategorieElement;
+    }
+
+    /**
+     * Add fkScenario
+     *
+     * @param \Lpmr\AppBundle\Entity\Scenario $fkScenario
+     *
+     * @return Element
+     */
+    public function addFkScenario(\Lpmr\AppBundle\Entity\Scenario $fkScenario)
+    {
+        $this->fkScenario[] = $fkScenario;
+
+        return $this;
+    }
+
+    /**
+     * Remove fkScenario
+     *
+     * @param \Lpmr\AppBundle\Entity\Scenario $fkScenario
+     */
+    public function removeFkScenario(\Lpmr\AppBundle\Entity\Scenario $fkScenario)
+    {
+        $this->fkScenario->removeElement($fkScenario);
+    }
+
+    /**
+     * Get fkScenario
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFkScenario()
+    {
+        return $this->fkScenario;
     }
 }
