@@ -3,39 +3,36 @@
 {% block body %}
 
 <div class="row">
-
-  <div class="col s12 m3 l5"></div>
-    <h1>Ajouter groupe</h1>
-  <div class="col s12 m3 l5"></div>
+    <div class="col s12 m3 l5"></div>
+       <h1>Ajouter groupe</h1>
+    <div class="col s12 m3 l5"></div>
 </div>
 <div class="row">
-  <div class="col s12 m3 l3"></div>
-  <div class="input-field col s12 m6">
-
-  {{ form_start(form) }}
+    <div class="col s12 m3 l3"></div>
+    <div class="input-field col s12 m6">
+    {{ form_start(form) }}
     {{ form_widget(form) }}
-      <table>
-        <tbody>
-          <tr>
-              <td align="center">
-                  <button class="waves-effect waves-light btn" type="submit">Ajouter
-                    <i class="material-icons left">add</i>
-                  </button>
-                  {{ form_end(form) }}
-              </td>
-          </tr>
-
-          <tr >
-            <td>
-            <a class="btn-floating btn-large " href="{{ path('groupe_index') }}">
-              <i class="large material-icons">arrow_back</i>
-            </a>
-            </td> 
-          </tr>
-        </tbody>
-      </table>
-  <div>
-  <div class="col s12 m3 l3"></div>
+        <table>
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <button class="waves-effect waves-light btn" type="submit">Ajouter
+                          <i class="material-icons left">add</i>
+                        </button>
+                        {{ form_end(form) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="btn-floating btn-large " href="{{ path('groupe_index') }}">
+                            <i class="large material-icons">arrow_back</i>
+                        </a>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col s12 m3 l3"></div>
 </div>
 
 {% endblock %}
