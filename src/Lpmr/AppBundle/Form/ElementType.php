@@ -5,6 +5,7 @@ namespace Lpmr\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ElementType extends AbstractType
 {
@@ -13,7 +14,10 @@ class ElementType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('url')->add('fkCategorieElement');
+        $builder->add('nom')->add('url')->add('fkCategorieElement', EntityType::class, array(
+          'class' => 'LpmrAppBundle:CategorieElement',
+          'choice_label' => 'nom',
+        ));
     }/**
      * {@inheritdoc}
      */

@@ -36,7 +36,7 @@ class ElementController extends Controller
     {
         $element = new Element();
         $form = $this->createForm('Lpmr\AppBundle\Form\ElementType', $element->setFkCategorieElement($fkid));
-        
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -105,7 +105,7 @@ class ElementController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('element_index');
+        return $this->redirectToRoute('scenario_index');
     }
 
     /**
