@@ -22,3 +22,8 @@ groupe_delete:
     path:     /{id}/delete
     defaults: { _controller: "LpmrUserBundle:Groupe:delete" }
     methods:  DELETE
+
+groupe_json:
+    path:     /api/login
+    defaults: { _controller: "LpmrUserBundle:Groupe:getOneGroupe" }
+    methods:  [POST]
