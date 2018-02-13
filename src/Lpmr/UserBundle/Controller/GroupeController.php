@@ -154,20 +154,20 @@ class GroupeController extends Controller
      $em = $this->getDoctrine()->getManager();
      $groupe = new Groupe();
      $groupe = $em->getRepository('LpmrUserBundle:Groupe')->findOneBy(array('code' => $content->get('code')));
+
      if($groupe != null){
        $chaine = ('abcdefghijklmnopqrstuvwxyz0123456789');
        $token = str_shuffle(substr($chaine, 0, 32));
-       if($groupe->getToken() == null){
+       if($content->get('token') == null ){
          $groupe->setToken($token);
-         $em = $this->getDoctrine()->getManager();
          $em->persist($groupe);
          $em->flush();
        }
 
        return new JsonResponse($groupe->getToken());
-     }else{
-       return new JsonResponse("empty");
      }
+       return new JsonResponse(null);
+
 
      }
 
