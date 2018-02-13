@@ -52,7 +52,7 @@ class Groupe
     /**
      * @var string
      *
-     * @ORM\Column(name="token", type="string", nullable=false)
+     * @ORM\Column(name="token", type="string", nullable=true)
      */
     private $token;
 
@@ -208,4 +208,27 @@ class Groupe
    {
        return $this->etudiants;
    }
+   
+/**
+     * @return string
+     * 
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+/**
+     * @param string $token
+     *
+     * @return Groupe
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+   
+   
 }
