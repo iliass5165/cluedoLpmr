@@ -2,9 +2,14 @@
 
 namespace Lpmr\UserBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Lpmr\UserBundle\Entity\Groupe;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Tests\Util\Validator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
 
 /**
  * Groupe controller.
@@ -145,14 +150,14 @@ class GroupeController extends Controller
 
     public function getOneGroupe(Request $request){
 
-      $content = $this->getContentAsArray($request);
+     $content = $this->getContentAsArray($request);
      $em = $this->getDoctrine()->getManager();
      $groupe = $em->getRepository('LpmrUserBundle:Groupe')->findByCode($content->get('code'));
 
      return JsonResponse($groupe->getId());
-   }
+     }
 
-   protected function getContentAsArray(Request $request){
+     protected function getContentAsArray(Request $request){
        $content = $request->getContent();
 
        if(empty($content)){
