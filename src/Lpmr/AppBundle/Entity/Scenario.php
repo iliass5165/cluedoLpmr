@@ -35,6 +35,20 @@ class Scenario
      */
     private $description;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Element", mappedBy="fkScenario")
+     */
+    private $fkElement;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fkElement = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -93,5 +107,39 @@ class Scenario
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Add fkElement
+     *
+     * @param \Lpmr\AppBundle\Entity\Element $fkElement
+     *
+     * @return Scenario
+     */
+    public function addFkElement(\Lpmr\AppBundle\Entity\Element $fkElement)
+    {
+        $this->fkElement[] = $fkElement;
+
+        return $this;
+    }
+
+    /**
+     * Remove fkElement
+     *
+     * @param \Lpmr\AppBundle\Entity\Element $fkElement
+     */
+    public function removeFkElement(\Lpmr\AppBundle\Entity\Element $fkElement)
+    {
+        $this->fkElement->removeElement($fkElement);
+    }
+
+    /**
+     * Get fkElement
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFkElement()
+    {
+        return $this->fkElement;
     }
 }

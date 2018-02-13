@@ -29,21 +29,27 @@ class ScenarioController extends Controller
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $scenario = new Scenario();
+        $elements = $em->getRepository('LpmrAppBundle:Element')->findAll();
+
         $form = $this->createForm('Lpmr\AppBundle\Form\ScenarioType', $scenario);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $em = $this->getDoctrine()->getManager();
 
             $em->persist($scenario);
             $em->flush();
 
-            return $this->redirectToRoute('scenario_show', array('id' => $scenario->getId()));
+            return $this->redirectToRoute('scenario_show', array(
+              'id' => $scenario->getId(),
+          ));
         }
 
         return $this->render('LpmrAppBundle:Scenario:new.html.twig', array(
             'scenario' => $scenario,
+            'elements' => $elements,
             'form' => $form->createView(),
         ));
     }

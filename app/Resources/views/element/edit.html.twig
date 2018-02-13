@@ -31,7 +31,7 @@
 
           <tr>
             {{ form_start(delete_form) }}
-              <button class="btn-floating btn-large red" type="submit" href="{{ path('element_edit', { 'id': element.id }) }}">
+              <button class="btn-floating btn-large red" type="submit" href="{{ path('scenario_index') }}">
                   <i class="large material-icons">delete_forever</i>
               </button>
             {{ form_end(delete_form) }}
@@ -41,6 +41,6 @@
   <div>
   <div class="col s12 m3 l3"></div>
 </div>
-          
+
 
 {% endblock %}
