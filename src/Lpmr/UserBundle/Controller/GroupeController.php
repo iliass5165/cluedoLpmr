@@ -5,9 +5,9 @@ namespace Lpmr\UserBundle\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Lpmr\UserBundle\Entity\Groupe;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Config\Tests\Util\Validator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 
@@ -148,13 +148,25 @@ class GroupeController extends Controller
         ;
     }
 
-    public function getOneGroupe(Request $request){
+    public function getOneGroupeAction(Request $request){
 
      $content = $this->getContentAsArray($request);
      $em = $this->getDoctrine()->getManager();
-     $groupe = $em->getRepository('LpmrUserBundle:Groupe')->findByCode($content->get('code'));
+     $groupe = new Groupe();
+     $groupe = $em->getRepository('LpmrUserBundle:Groupe')->findOneBy(array('code' => $content->get('code')));
+     if($groupe != null){
+       $chaine = ('abcdefghijklmnopqrstuvwxyz0123456789');
+       $token = str_shuffle(substr($chaine, 0, 32));
+       
+       $groupe->setToken($token);
+       $em = $this->getDoctrine()->getManager();
+       $em->persist($groupe);
+       $em->flush();
+       return new JsonResponse($groupe->getToken());
+     }else{
+       return new JsonResponse("empty");
+     }
 
-     return JsonResponse($groupe->getId());
      }
 
      protected function getContentAsArray(Request $request){
@@ -163,11 +175,6 @@ class GroupeController extends Controller
        if(empty($content)){
            throw new BadRequestHttpException("Content is empty");
        }
-
-       if(!Validator::isValidJsonString($content)){
-           throw new BadRequestHttpException("Content is not a valid json");
-       }
-
        return new ArrayCollection(json_decode($content, true));
    }
 }
