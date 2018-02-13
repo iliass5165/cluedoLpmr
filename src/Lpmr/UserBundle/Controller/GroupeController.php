@@ -157,11 +157,13 @@ class GroupeController extends Controller
      if($groupe != null){
        $chaine = ('abcdefghijklmnopqrstuvwxyz0123456789');
        $token = str_shuffle(substr($chaine, 0, 32));
-       
-       $groupe->setToken($token);
-       $em = $this->getDoctrine()->getManager();
-       $em->persist($groupe);
-       $em->flush();
+       if($groupe->getToken() == null){
+         $groupe->setToken($token);
+         $em = $this->getDoctrine()->getManager();
+         $em->persist($groupe);
+         $em->flush();
+       }
+
        return new JsonResponse($groupe->getToken());
      }else{
        return new JsonResponse("empty");
