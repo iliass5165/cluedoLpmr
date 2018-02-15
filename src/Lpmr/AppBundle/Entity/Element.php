@@ -61,6 +61,11 @@ class Element
     private $fkScenario;
 
     /**
+    * @ORM\OneToMany(targetEntity="GroupeElements", mappedBy="elementId")
+    */
+    private $elementId;
+
+    /**
      * Constructor
      */
     public function __construct()
