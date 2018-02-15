@@ -38,13 +38,12 @@ class ScenarioController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-
+            
             $em->persist($scenario);
             $em->flush();
 
-            return $this->redirectToRoute('scenario_show', array(
-              'id' => $scenario->getId(),
-          ));
+          
+            return $this->redirectToRoute("scenario_index");
         }
 
         return $this->render('LpmrAppBundle:Scenario:new.html.twig', array(
