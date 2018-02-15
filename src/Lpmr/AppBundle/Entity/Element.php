@@ -60,6 +60,10 @@ class Element
      */
     private $fkScenario;
 
+
+
+    
+
     /**
     * @ORM\OneToMany(targetEntity="GroupeElements", mappedBy="elementId")
     */
@@ -189,4 +193,9 @@ class Element
     {
         return $this->fkScenario;
     }
+
+
+
+
+
 }

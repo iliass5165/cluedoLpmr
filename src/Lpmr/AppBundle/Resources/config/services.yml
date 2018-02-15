@@ -2,3 +2,5 @@ services:
 #    lpmr_app.example:
 #        class: Lpmr\AppBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    

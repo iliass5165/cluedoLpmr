@@ -6,7 +6,6 @@ use Lpmr\AppBundle\Entity\Element;
 use Lpmr\AppBundle\Entity\CategorieElement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 /**
  * Element controller.
  *
@@ -32,15 +31,22 @@ class ElementController extends Controller
      * Creates a new element entity.
      *
      */
-    public function newAction(Request $request, CategorieElement $fkid)
+    public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $element = new Element();
-        $form = $this->createForm('Lpmr\AppBundle\Form\ElementType', $element->setFkCategorieElement($fkid));
-
+        $form = $this->createForm('Lpmr\AppBundle\Form\ElementType', $element);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $file = $element->getUrl();
+            //force to mp4
+            $filename = md5(uniqid()).".mp4";
+            $file->move(
+                $this->getParameter('upload_dir'),
+                $filename
+            );
+            $element->setUrl($filename);
+
             $em->persist($element);
             $em->flush();
 
