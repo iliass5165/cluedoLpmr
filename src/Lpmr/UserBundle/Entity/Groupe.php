@@ -62,6 +62,11 @@ class Groupe
     private $etudiants;
 
     /**
+    * @ORM\OneToMany(targetEntity="Lpmr\AppBundle\Entity\GroupeElements", mappedBy="groupeId")
+    */
+    private $groupeId;
+
+    /**
      * Get id
      *
      * @return integer
@@ -208,10 +213,10 @@ class Groupe
    {
        return $this->etudiants;
    }
-   
+
 /**
      * @return string
-     * 
+     *
      * @return string
      */
     public function getToken()
@@ -229,6 +234,6 @@ class Groupe
         $this->token = $token;
     }
 
-   
-   
+
+
 }
