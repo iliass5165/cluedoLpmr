@@ -6,6 +6,14 @@ use Lpmr\AppBundle\Entity\Element;
 use Lpmr\AppBundle\Entity\CategorieElement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 /**
  * Element controller.
@@ -123,4 +131,69 @@ class ElementController extends Controller
             ->getForm()
         ;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function getElementsAction(){
+
+     $em = $this->getDoctrine()->getManager();
+     $elements = new Element();
+     $elements = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 1));
+     $armes = $elements;
+
+     $elements = new Element();
+     $elements = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 2));
+     $lieux = $elements;
+
+     $elements = new Element();
+     $elements = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 2));
+     $personnages = $elements;
+
+     $api = array();
+     array_push($api, 'armes', $armes);
+     array_push($api, 'lieux', $lieux);
+     array_push($api, 'personnages', $personnages);
+     var_dump($api);
+
+     $encoder = new JsonEncoder();
+     $normalizer = new GetSetMethodNormalizer();
+
+     $serializer = new Serializer(array($normalizer), array($encoder));
+
+     $jsonContent = $serializer->serialize($api, 'json');
+
+     return new JsonResponse($jsonContent);
+
+
+     }
+
+     protected function getContentAsArray(Request $request){
+       $content = $request->getContent();
+
+       if(empty($content)){
+           throw new BadRequestHttpException("Content is empty");
+       }
+       return new ArrayCollection(json_decode($content, true));
+   }
 }

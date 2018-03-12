@@ -5,7 +5,7 @@ lpmr_app_homepage:
 lpmr_app_scenario:
     resource: "@LpmrAppBundle/Resources/config/routing/scenario.yml"
     prefix:   /scenario
-    
+
 lpmr_app_element:
     resource: "@LpmrAppBundle/Resources/config/routing/element.yml"
     prefix:   /element
