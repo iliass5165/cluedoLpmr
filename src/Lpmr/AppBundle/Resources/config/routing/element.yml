@@ -22,3 +22,8 @@ element_delete:
     path:     /{id}/delete
     defaults: { _controller: "LpmrAppBundle:Element:delete" }
     methods:  DELETE
+
+element_json:
+    path:     /api/elements
+    defaults: { _controller: "LpmrAppBundle:Element:getElements" }
+    methods:  [GET]
