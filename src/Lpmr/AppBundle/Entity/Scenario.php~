@@ -147,28 +147,4 @@ class Scenario
     {
         return $this->fkElement;
     }
-
-    /**
-     * Set selectedScenario.
-     *
-     * @param bool $selectedScenario
-     *
-     * @return Scenario
-     */
-    public function setSelectedScenario($selectedScenario)
-    {
-        $this->selectedScenario = $selectedScenario;
-
-        return $this;
-    }
-
-    /**
-     * Get selectedScenario.
-     *
-     * @return bool
-     */
-    public function getSelectedScenario()
-    {
-        return $this->selectedScenario;
-    }
 }

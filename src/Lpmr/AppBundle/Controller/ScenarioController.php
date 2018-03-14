@@ -4,6 +4,8 @@ namespace Lpmr\AppBundle\Controller;
 
 use Lpmr\AppBundle\Entity\Scenario;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ScenarioController extends Controller
@@ -121,4 +123,121 @@ class ScenarioController extends Controller
         ;
     }
 
+
+    public function setSelectedScenarioAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        }
+        $content = $request->getContent();
+        $jsonContent = json_decode($content);
+        if($jsonContent->selectedId != null)
+        {
+            $em = $this->getDoctrine()->getManager();
+            $scenarios = $em->getRepository('LpmrAppBundle:Scenario')->findBySelectedScenario(1);
+        
+            if(count($scenarios) > 0)
+            {
+                foreach($scenarios as $sc)
+                {
+                    $sc->setSelectedScenario(0);
+                    $em->persist($sc);
+                }
+                
+            }
+            $scenario = $em->getRepository('LpmrAppBundle:Scenario')->find($jsonContent->selectedId);
+            $scenario->setSelectedScenario(1);
+            $em->persist($scenario);
+            $em->flush();
+            
+            if(count($scenario->getFkElement()) > 0)
+            {
+                $elementArray = [];
+                foreach($scenario->getFkElement() as $element)
+                {
+                    $elementArray[] = $element->getId();
+                }
+            
+                return new JsonResponse(["status" => "success", "elements" => json_encode($elementArray)]);
+            }
+            
+
+            return new JsonResponse(["status" => "success"]);
+        }
+        
+    }
+
+
+    public function addCheckedElementToScenarioAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        }
+        //json: {'scenario':":id", 'element': ":id"}
+        $content = $request->getContent();
+        $jsonContent = json_decode($content);
+        if($jsonContent != null)
+        {
+            $em = $this->getDoctrine()->getManager();
+            $scenario = $em->getRepository("LpmrAppBundle:Scenario")->find($jsonContent->scenario);
+            $element = $em->getRepository("LpmrAppBundle:Element")->find($jsonContent->element);
+            $element->addFkScenario($scenario);
+            $em->persist($element);
+            $em->flush();
+            return new JsonResponse(["status" => "added"]);
+        }
+        return new JsonResponse(["status" => "Error"]);
+    }
+
+    public function removeCheckedElementToScenarioAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        }
+        //json: {'scenario':":id", 'element': ":id"}
+        $content = $request->getContent();
+        $jsonContent = json_decode($content);
+        if($jsonContent != null)
+        {
+            $em = $this->getDoctrine()->getManager();
+            $scenario = $em->getRepository("LpmrAppBundle:Scenario")->find($jsonContent->scenario);
+            $element = $em->getRepository("LpmrAppBundle:Element")->find($jsonContent->element);
+            $element->removeFkScenario($scenario);
+            $em->persist($element);
+            $em->flush();
+            return new JsonResponse(["status" => "removed"]);
+        }
+        return new JsonResponse(["status" => "Error"]);
+    }
+
+
+    public function getSelectedElementsOfSelectedScenarioAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        }
+        //json {"scenario": ":id"}
+        $content = $request->getContent();
+        $jsonContent = json_decode($content);
+        if($jsonContent != null)
+        {
+            $em = $this->getDoctrine()->getManager();
+            $scenario = $em->getRepository("LpmrAppBundle:Scenario")->find($jsonContent->scenario);
+            
+            if(count($scenario->getFkElement()) > 0)
+            {
+                $elementArray = [];
+                foreach($scenario->getFkElement() as $element)
+                {
+                    $elementArray[] = $element->getId();
+                }
+                return new JsonResponse(["elements" => json_encode($elementArray)]);
+            }
+            else
+            {
+                return new JsonResponse(["elements" => null]);
+            }
+            return new JsonResponse(["status" => "Error"]);
+        }
+    }
 }

@@ -23,3 +23,31 @@ scenario_delete:
     defaults: { _controller: "LpmrAppBundle:Scenario:delete" }
     methods:  DELETE
 
+scenario_post_isselected:
+    path:   /select
+    defaults: { _controller: "LpmrAppBundle:Scenario:setSelectedScenario" }
+    methods:  [POST]
+    options:
+        expose: true
+
+scenario_check_element:
+    path: /check
+    defaults: { _controller: "LpmrAppBundle:Scenario:addCheckedElementToScenario" }
+    methods:  [POST]
+    options:
+        expose: true
+
+scenario_uncheck_element:
+    path: /uncheck
+    defaults: { _controller: "LpmrAppBundle:Scenario:removeCheckedElementToScenario" }
+    methods:  [POST]
+    options:
+        expose: true
+
+
+scenario_get_selected_elements:
+    path: /elements/checked
+    defaults: { _controller: "LpmrAppBundle:Scenario:getSelectedElementsOfSelectedScenario" }
+    methods:  [POST]
+    options:
+        expose: true

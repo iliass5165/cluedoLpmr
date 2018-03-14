@@ -170,7 +170,7 @@ class Element
     public function addFkScenario(\Lpmr\AppBundle\Entity\Scenario $fkScenario)
     {
         $this->fkScenario[] = $fkScenario;
-
+        $fkScenario->addFkElement($this);
         return $this;
     }
 
@@ -195,7 +195,7 @@ class Element
     }
 
 
-
+    
 
 
 }

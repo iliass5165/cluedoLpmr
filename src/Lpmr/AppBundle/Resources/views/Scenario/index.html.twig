@@ -1,5 +1,4 @@
-{% extends 'base.html.twig' %}
-
+{% extends '::base.html.twig' %}
 {% block body %}
     <h1>Scenario list</h1>
 
@@ -13,7 +12,13 @@
                             <img src="../../images/cluedo.jpg">
                         </div>
                         <div class="card-content" style="text-align:center;">
-                            <input name='radio_scenarios' type="radio" value="{{ scenario.titre }}" id="sce_{{ scenario.id }}" />
+                        {% if scenario.selectedScenario == true %}
+                        <input type="hidden" id="selectedScenario" name="selectedScenario" value="{{ scenario.id }}"/>
+                            <input name='radio_scenarios' type="radio" value="{{ scenario.id }}" id="sce_{{ scenario.id }}"  checked/>
+                        {% else %}
+                            <input name='radio_scenarios' type="radio" value="{{ scenario.id }}" id="sce_{{ scenario.id }}"  />
+                        {% endif %}
+                            
                             <label for='sce_{{ scenario.id }}'>{{ scenario.titre }}</label>
                         </div>
                         <div class="card-action" style="text-align:center;">
@@ -30,7 +35,7 @@
         </div>
         <!-- Liste des scénarios -->
 
-        <div class="row" >
+        <div class="row " >
           <div class="col s12"></div>
             <ul class="collapsible blue-grey" data-collapsible="accordion">
               <!-- Liste des armes -->
@@ -39,15 +44,15 @@
                 <div class="collapsible-body #eeeeee grey lighten-3" >
                   <div class="row">
                     {% for element in elements %}
-                        {% if(element.fkCategorieElement.id==1) %}
+                        {% if(element.fkCategorieElement.nom == "Armes") %}
                           <div class="col s12 m3 l2">
                               <div class="card">
                                   <div class="card-image">
                                       <img src="../../images/rj45.jpg">
                                   </div>
                                   <div class="card-content" style="text-align:center;">
-                                      <input name='check_armes' type="checkbox" id="arme_{{ element.id }}"   />
-                                      <label for='arme_{{ element.id }}'>{{ element.nom }}</label>
+                                      <input class="checkElement" name='check_armes' type="checkbox" id="element_{{ element.id }}" value="{{ element.id }}"  />
+                                      <label for='element_{{ element.id }}'>{{ element.nom }}</label>
                                   </div>
                                   <div class="card-action" style="text-align:center;">
                                       <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
@@ -72,15 +77,15 @@
                 <div class="collapsible-body #eeeeee grey lighten-3" >
                   <div class="row">
                     {% for element in elements %}
-                        {% if(element.fkCategorieElement.id==3) %}
+                        {% if(element.fkCategorieElement.nom == "Lieux") %}
                           <div class="col s12 m3 l2">
                               <div class="card">
                                   <div class="card-image">
                                       <img src="../../images/map.png">
                                   </div>
                                   <div class="card-content" style="text-align:center;">
-                                      <input name='check_lieux' type="checkbox" id="lieu_{{ element.id }}" />
-                                      <label for='lieu_{{ element.id }}'>{{ element.nom }}</label>
+                                      <input name='check_lieux' type="checkbox" id="element_{{ element.id }}"  class="checkElement" value="{{ element.id }}"/>
+                                      <label for='element_{{ element.id }}'>{{ element.nom }}</label>
                                   </div>
                                   <div class="card-action" style="text-align:center;">
                                       <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
@@ -105,15 +110,15 @@
                 <div class="collapsible-body #eeeeee grey lighten-3" >
                   <div class="row">
                     {% for element in elements %}
-                        {% if(element.fkCategorieElement.id==2) %}
+                        {% if(element.fkCategorieElement.nom == "Personnages") %}
                           <div class="col s12 m3 l2">
                               <div class="card">
                                   <div class="card-image">
                                       <img src="../../images/person.png">
                                   </div>
                                   <div class="card-content" style="text-align:center;">
-                                      <input name='check_persos' type="checkbox" id="perso_{{ element.id }}" />
-                                      <label for='perso_{{ element.id }}'>{{ element.nom }}</label>
+                                      <input name='check_persos' type="checkbox" id="element_{{ element.id }}" class="checkElement" value="{{ element.id }}"/>
+                                      <label for='element_{{ element.id }}'>{{ element.nom }}</label>
                                   </div>
                                   <div class="card-action" style="text-align:center;">
                                       <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
@@ -140,4 +145,8 @@
     <div class="fixed-action-btn horizontal">
         <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('scenario_new') }}"><i class="large material-icons">add</i></a>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset('js/scripts/scenario.js')}}"></script>
 {% endblock %}
