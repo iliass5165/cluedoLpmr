@@ -70,6 +70,11 @@ class Element
     private $elementId;
 
     /**
+    * @ORM\OneToMany(targetEntity="GroupeElements", mappedBy="elementId")
+    */
+    private $elementId;
+
+    /**
      * Constructor
      */
     public function __construct()
