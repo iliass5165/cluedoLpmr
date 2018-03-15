@@ -164,33 +164,37 @@ class ElementController extends Controller
 
     public function getElementsAction(){
 
-     $em = $this->getDoctrine()->getManager();
-     $elements = new Element();
-     $elements = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 1));
-     $armes = $elements;
+       $em = $this->getDoctrine()->getManager();
+       $elements = new Element();
+       $elements = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 1));
 
-     $elements = new Element();
-     $elements = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 2));
-     $lieux = $elements;
 
-     $elements = new Element();
-     $elements = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 2));
-     $personnages = $elements;
+       //var_dump($elements);
 
-     $api = array();
-     array_push($api, 'armes', $armes);
-     array_push($api, 'lieux', $lieux);
-     array_push($api, 'personnages', $personnages);
-     var_dump($api);
+       $elements1 = new Element();
+       $elements1 = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 2));
 
-     $encoder = new JsonEncoder();
-     $normalizer = new GetSetMethodNormalizer();
 
-     $serializer = new Serializer(array($normalizer), array($encoder));
+       $elements2 = new Element();
+       $elements2 = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 2));
 
-     $jsonContent = $serializer->serialize($api, 'json');
 
-     return new JsonResponse($jsonContent);
+       $api = array();
+       array_push($api, 'armes', $armes);
+       array_push($api, 'lieux', $lieux);
+       array_push($api, 'personnages', $personnages);
+       //var_dump($api);
+
+       $encoder = new JsonEncoder();
+       $normalizer = new GetSetMethodNormalizer();
+
+       $serializer = new Serializer(array($normalizer), array($encoder));
+       $jsonContent = $serializer->serialize(array('armes' => $elements, 'lieux' => $elements1, 'personnages' => $elements2), 'json');
+
+
+       $response = new Response($jsonContent);
+       $response->headers->set('Content-Type', 'application/json');
+       return $response;
 
 
      }
