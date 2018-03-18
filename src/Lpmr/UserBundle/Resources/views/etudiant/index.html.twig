@@ -51,7 +51,7 @@
                 <td>{{ etudiant.nom }}</td>
                 <td>{{ etudiant.prenom }}</td>
                 <td>{{ etudiant.promotion }}</td>
-                <td><a href="{{ path('groupe_show', { 'id':  etudiant.groupe.getId }) }}">{{ etudiant.groupe.getNom }}</a></td>
+                <td>{% if etudiant.groupe %}<a href="{{ path('groupe_show', { 'id':  etudiant.groupe.getId }) }}">{{ etudiant.groupe.getNom }}</a>{% endif %}</td>
                 <td>
                     <ul>
                         <a class="btn-floating btn-large " href="{{ path('etudiant_show', { 'id': etudiant.id }) }}">

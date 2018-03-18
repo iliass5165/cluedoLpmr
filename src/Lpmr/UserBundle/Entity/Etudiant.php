@@ -138,7 +138,7 @@ class Etudiant
      *
      * @return Etudiant
      */
-    public function setGroupe(\Lpmr\UserBundle\Entity\Groupe $groupe)
+    public function setGroupe(\Lpmr\UserBundle\Entity\Groupe $groupe = null)
     {
         $this->groupe = $groupe;
 

@@ -190,7 +190,7 @@ class Groupe
    public function addEtudiant(\Lpmr\UserBundle\Entity\Etudiant $etudiant)
    {
        $this->etudiants[] = $etudiant;
-
+       $etudiant->setGroupe($this);
        return $this;
    }
 

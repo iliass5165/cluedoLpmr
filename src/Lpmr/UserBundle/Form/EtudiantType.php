@@ -20,7 +20,9 @@ class EtudiantType extends AbstractType
         $builder->add('nom')
                 ->add('prenom')
                 ->add('promotion')
-                ->add('groupe', EntityType::class,  array('class' => 'LpmrUserBundle:Groupe', 'choice_label' => 'nom', ), array('attr' => array('class' => 'input-field col s12 ')));
+                ->add('groupe', EntityType::class,  array(
+                    "required" => false,
+                    'class' => 'LpmrUserBundle:Groupe', 'choice_label' => 'nom', ), array('attr' => array('class' => 'input-field col s12 ')));
     }
 
     /**
