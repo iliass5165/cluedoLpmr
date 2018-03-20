@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col s12 m3 l5"></div>
+    <h1>Suivi des groupes</h1>
+  <div class="col s12 m3 l5"></div>
+</div>
+
+<div class="row">
+  <div class="col s12 13"></div>
+  <div class="input-field col s12 m12">
+
+    <table class="striped">
+      <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Progression</th>
+            <th>Temps</th>
+            <th>Points</th>
+            <th>Info</th>
+            <th>Modifier</th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for groupe in groupes %}
+        <tr>
+          <td>{{ groupe.nom }}</td>
+          <td>
+            <div class="progress col s6 m6">
+              <div class="determinate" style="width: 25%"></div>
+            </div>
+          </td>
+          <td></td>
+          <td>{{ groupe.nbpointglobal}}</td>
+          <td>
+              <a class="btn-floating btn-large" href="{{ path('groupe_show', {'id': groupe.id}) }}">
+                <i class="large material-icons">info</i>
+              </a>
+          </td>
+          <td>
+            <a class="btn-floating btn-large" href="{{ path('groupe_edit', {'id': groupe.id}) }}">
+              <i class="large material-icons">mode_edit</i>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="col s12 m3 m13"></div>
+
+  </div>
+</div>
+
+{% endblock %}

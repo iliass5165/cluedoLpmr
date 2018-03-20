@@ -132,6 +132,21 @@ class GroupeController extends Controller
         return $this->redirectToRoute('groupe_index');
     }
 
+
+    /**
+    * View all groups in home
+    *
+    */
+    public function homeAction(){
+      $em = $this->getDoctrine()->getManager();
+
+      $groupes = $em->getRepository('LpmrUserBundle:Groupe')->findAll();
+
+      return $this->render('groupe/home.html.twig', array(
+          'groupes' => $groupes,
+      ));
+    }
+
     /**
      * Creates a form to delete a groupe entity.
      *
