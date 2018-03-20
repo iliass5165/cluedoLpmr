@@ -1,7 +1,7 @@
 groupe_index:
-    path:     /
+    path:     /index
     defaults: { _controller: "LpmrUserBundle:Groupe:index" }
-    methods:  GET
+    methods:  [GET, POST]
 
 groupe_show:
     path:     /{id}/show
@@ -27,3 +27,7 @@ groupe_json:
     path:     /api/login
     defaults: { _controller: "LpmrUserBundle:Groupe:getOneGroupe" }
     methods:  [POST]
+
+groupe_home:
+    path:   /
+    defaults: { _controller: "LpmrUserBundle:Groupe:home" }

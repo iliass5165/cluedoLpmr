@@ -17,9 +17,9 @@ class GroupeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom', TextType::class)
-                ->add('etudiants', EntityType::class,  array(
+        $builder->add('etudiants', EntityType::class,  array(
                     "required" => false,
+                    'by_reference' => false,
                     'class'   => 'LpmrUserBundle:Etudiant','multiple' => true, 'choice_label' => 'nom'), array('attr' => array('class' => 'input-field col s12 ')))
                 ->add("save", SubmitType::class,[
                     "label" => "Valider",

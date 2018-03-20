@@ -28,22 +28,78 @@ class GroupeController extends Controller
 
         $groupes = $em->getRepository('LpmrUserBundle:Groupe')->findAll();
         $students = $em->getRepository("LpmrUserBundle:Etudiant")->findAll();
+        
         $form = $this->createFormBuilder()
         ->add('nbStudents', NumberType::class)
         ->add('generate', SubmitType::class)
         ->setAction($this->generateUrl('groupe_index'))
         ->getForm()
         ;
+        $studentsWithoutGroup  = [];
+        foreach($students as $student)
+        {
+            if(is_null($student->getGroupe())){
+                $studentsWithoutGroup[] = $student;
+            }
+        }
+        
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            return var_dump($form->getData());
+            $nbStudents = $form->getData()['nbStudents'];    
+            
+            while(count($studentsWithoutGroup) >= $nbStudents) 
+            {
+                $code = rand(11111111, 99999999);
+                while($em->getRepository("LpmrUserBundle:Groupe")->findByCode($code))
+                {
+                    $code = rand(11111111, 99999999);
+                }
+                $groupe = new Groupe();
+                $groupe->setCode($code);
+                $groupe->setNbpointglobal(0);
+                $groupe->setAnnee(new \DateTime());
+                $randStudents = array_rand($studentsWithoutGroup, $nbStudents);
+                
+                foreach($randStudents as $randStudent)
+                {
+                    $groupe->addEtudiant($studentsWithoutGroup[$randStudent]);
+                    unset($studentsWithoutGroup[$randStudent]);
+                    
+                }
+
+                 $em->persist($groupe);
+            }
+                
+            if(count($studentsWithoutGroup) > 0)
+            {
+                $code = rand(11111111, 99999999);
+                while($em->getRepository("LpmrUserBundle:Groupe")->findByCode($code))
+                {
+                    $code = rand(11111111, 99999999);
+                }
+                
+                $groupe = new Groupe();
+                $groupe->setCode($code);
+                $groupe->setNbpointglobal(0);
+                $groupe->setAnnee(new \DateTime());
+                foreach($studentsWithoutGroup as $student)
+                {
+                    $groupe->addEtudiant($student);  
+                    unset($studentsWithoutGroup[$randStudent]);                  
+                }
+                $em->persist($groupe);
+            }
+          
+            $em->flush();
+            return $this->redirectToRoute('groupe_index');
         }
 
-
+        
         return $this->render('groupe/index.html.twig', array(
             'groupes' => $groupes,
             'students' => $students,
+            "studentsWithoutGroup" => $studentsWithoutGroup,
             "formGenerate" => $form->createView()
         ));
     }
@@ -64,29 +120,13 @@ class GroupeController extends Controller
             $result = 1;
             while($result != null)
             {
-                $code = str_shuffle(substr("0123456789", 0, 8));
+                $code = rand(11111111, 99999999);
                 $result = $em->getRepository('LpmrUserBundle:Groupe')->findOneBy(array('code' => $code));
             }            
             $date = new \DateTime();
             $groupe->setAnnee($date);
             $groupe->setNbpointglobal(0);
             $groupe->setCode($code);
-            //verification si l'admin n'a pas ajouter des etudiant manullement
-            if(count($groupe->getEtudiants()) == 0)
-            {
-                //recuperation des etudiant qui ont pas de groupe
-                $students = $em->getRepository("LpmrUserBundle:Etudiant")->findByGroupe(null);
-                
-                foreach($students as $students)
-                {
-                    
-                }
-                
-            }
-
-
-
-
             $em->persist($groupe);
             $em->flush();
 
@@ -120,10 +160,14 @@ class GroupeController extends Controller
     {
         $deleteForm = $this->createDeleteForm($groupe);
         $editForm = $this->createForm('Lpmr\UserBundle\Form\GroupeType', $groupe);
+        
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($groupe);
+            // die(dump($groupe));
+            $em->flush();
 
             return $this->redirectToRoute('groupe_index', array('id' => $groupe->getId()));
         }
@@ -151,6 +195,21 @@ class GroupeController extends Controller
         }
 
         return $this->redirectToRoute('groupe_index');
+    }
+
+
+    /**
+    * View all groups in home
+    *
+    */
+    public function homeAction(){
+      $em = $this->getDoctrine()->getManager();
+
+      $groupes = $em->getRepository('LpmrUserBundle:Groupe')->findAll();
+
+      return $this->render('groupe/home.html.twig', array(
+          'groupes' => $groupes,
+      ));
     }
 
     /**

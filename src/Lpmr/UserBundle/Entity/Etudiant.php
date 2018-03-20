@@ -44,8 +44,8 @@ class Etudiant
 
 
     /**
-    * @ORM\ManyToOne(targetEntity="Groupe", inversedBy="groupes")
-    * @ORM\JoinColumn(nullable=true)
+    * @ORM\ManyToOne(targetEntity="Groupe", inversedBy="etudiants", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
     */
    private $groupe;
 

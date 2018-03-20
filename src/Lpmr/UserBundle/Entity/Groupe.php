@@ -24,9 +24,9 @@ class Groupe
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=30, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=30, nullable=true)
      */
-    private $nom;
+    // private $nom;
 
     /**
      * @var integer
@@ -76,29 +76,29 @@ class Groupe
         return $this->id;
     }
 
-    /**
-     * Set nom
-     *
-     * @param string $nom
-     *
-     * @return Groupe
-     */
-    public function setNom($nom)
-    {
-        $this->nom = $nom;
+    // /**
+    //  * Set nom
+    //  *
+    //  * @param string $nom
+    //  *
+    //  * @return Groupe
+    //  */
+    // public function setNom($nom)
+    // {
+    //     $this->nom = $nom;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * Get nom
-     *
-     * @return string
-     */
-    public function getNom()
-    {
-        return $this->nom;
-    }
+    // /**
+    //  * Get nom
+    //  *
+    //  * @return string
+    //  */
+    // public function getNom()
+    // {
+    //     return $this->nom;
+    // }
 
     /**
      * Set nbpointglobal
