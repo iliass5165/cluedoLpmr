@@ -1,46 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
- <div class="row">
-
-      <div class="col s12 m3 l5"></div>
-          <h1>Editer Element</h1>
-      <div class="col s12 m3 l5"></div>
-      </div>
-      <div class="row">
-        <div class="col s12 m3 l3"></div>
-        <div class="col s12 m6">
-
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-    {{ form_end(edit_form) }}
-      <table>
-        <tbody>
-          <tr>
-            <a class="btn-floating btn-large " href="{{ path('scenario_index') }}">
-              <i class="large material-icons">arrow_back</i>
-            </a>
-          </tr>
-          <tr>
-
-              <button class="btn-floating btn-large blue" type="submit" href="{{ path('element_edit', { 'id': element.id }) }}">
-                  <i class="large material-icons">mode_edit</i>
-              </button>
-              {{ form_end(edit_form) }}
-          </tr>
-
-          <tr>
-            {{ form_start(delete_form) }}
-              <button class="btn-floating btn-large red" type="submit" href="{{ path('scenario_index') }}">
-                  <i class="large material-icons">delete_forever</i>
-              </button>
-            {{ form_end(delete_form) }}
-          </tr>
-        </tbody>
-      </table>
-  <div>
-  <div class="col s12 m3 l3"></div>
+<div class="container">
+  <div class="row">
+    <h1>Editer Element</h1>
+{% set mediaType = element.url|split('.') %} 
+<div class="col s12">
+{% if mediaType[1] == 'mp4'%}
+<video class="responsive-img col l6 offset-l3" controls>
+  <source src="{{ asset('uploads/elements/' ~ element.url) }}" type="video/mp4">
+Your browser does not support the video tag.
+</video> 
+{% else %}
+      <img class="responsive-img col l6 offset-l3" src="{{ asset('uploads/elements/' ~ element.url) }}">
+{% endif %}
 </div>
 
-
+    <div class="row">
+      {{ form_start(edit_form) }}
+      {{ form_widget(edit_form) }}
+      <button class="btn-floating btn-large blue" type="submit" href="{{ path('element_edit', { 'id': element.id }) }}">
+            <i class="large material-icons">mode_edit</i>
+        </button>
+      {{ form_end(edit_form) }}
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 
 /**
  * Element controller.
@@ -48,14 +49,31 @@ class ElementController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $element->getUrl();
-            //force to mp4
-            $filename = md5(uniqid()).".mp4";
-            $file->move(
-                $this->getParameter('upload_dir'),
-                $filename
-            );
-            $element->setUrl($filename);
-
+            $fileType = explode("/",$file->getMimeType())[0];
+            if($fileType == "image")
+            {
+                $extension = $file->guessExtension();
+                $filename = md5(uniqid()).".".$extension;
+                $file->move(
+                    $this->getParameter('upload_dir'),
+                    $filename
+                );
+                $element->setUrl($filename);
+            }
+            elseif($fileType == "video")
+            {
+                //force to mp4
+                $filename = md5(uniqid()).".mp4";
+                $file->move(
+                    $this->getParameter('upload_dir'),
+                    $filename
+                );
+                $element->setUrl($filename);
+            }
+            else
+            {
+                new UnsupportedMediaTypeHttpException("type of uploaded ressource invalide!");
+            }
             $em->persist($element);
             $em->flush();
 
@@ -93,6 +111,34 @@ class ElementController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $file = $element->getUrl();
+            $fileType = explode("/",$file->getMimeType())[0];
+            if($fileType == "image")
+            {
+                $extension = $file->guessExtension();
+                $filename = md5(uniqid()).".".$extension;
+                $file->move(
+                    $this->getParameter('upload_dir'),
+                    $filename
+                );
+                $element->setUrl($filename);
+            }
+            elseif($fileType == "video")
+            {
+                //force to mp4
+                $filename = md5(uniqid()).".mp4";
+                $file->move(
+                    $this->getParameter('upload_dir'),
+                    $filename
+                );
+                $element->setUrl($filename);
+            }
+            else
+            {
+                new UnsupportedMediaTypeHttpException("type of uploaded ressource invalide!");
+            }
+
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('element_edit', array('id' => $element->getId()));

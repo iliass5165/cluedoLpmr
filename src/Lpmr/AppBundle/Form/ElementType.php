@@ -16,7 +16,10 @@ class ElementType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('url', FileType::class)
+            ->add('url', FileType::class, [
+                "required" => false,
+                'data_class' => null
+            ])
             ->add('fkCategorieElement', EntityType::class, array(
             'class' => 'LpmrAppBundle:CategorieElement',
             'choice_label' => 'nom',
