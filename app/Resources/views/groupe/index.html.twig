@@ -4,15 +4,40 @@
 <div class="container">
     <div class="row">
     <h1>list des groupes</h1>
-    <div class="chip righ-align">
-        Nombre d'etudiant: {% if studentLength %} {{studentLength}} {% else %}0{% endif %}
+    <div class="col l7">
+        <div class="chip righ-align">
+            Nombre d'etudiant: {% if students|length > 0 %} {{students|length}} {% else %}0{% endif %}
+        </div>
+        <div class="chip righ-align">
+            Nombre d'etudiant sans groupe: 
+            {% if students|length > 0 %} 
+                {% set countStudentsWithoutGroup = 0 %}
+                {% for student in students %}
+                    {% if not student.groupe %}
+                        {% set countStudentsWithoutGroup =  countStudentsWithoutGroup + 1 %}
+                    {% endif %}
+                {% endfor %}
+                {% if countStudentsWithoutGroup == 0 %}
+                    0
+                {% else %}
+                    {{countStudentsWithoutGroup}}
+                {% endif %}
+            {% else %}
+                0
+            {% endif %}
+        </div>
     </div>
-
+    <div class="col l5">
+        {{form_start(formGenerate)}}
+            {{form_widget(formGenerate.nbStudents, {'attr':{"class": "col s8"}})}}
+            {{form_widget(formGenerate.generate, {'attr':{"class": "col s4 waves-effect waves-light btn"}})}}
+        {{form_end(formGenerate)}}
+    </div>
     <table  class="striped datatable col s12 l12 m12" >
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Nbpointglobal</th>
+                <th>Nb personne</th>
                 <th>Annee</th>
                 <th>Code</th>
                 <th>Actions</th>
@@ -22,7 +47,7 @@
         {% for groupe in groupes %}
             <tr>
                 <td>{{ groupe.nom }}</td>
-                <td>{{ groupe.nbpointglobal }}</td>
+                <td>{{ groupe.etudiants|length }}</td>
                 <td>{% if groupe.annee %}{{ groupe.annee|date('Y') }}{% endif %}</td>
                 <td>{{ groupe.code }}</td>
                 <td>

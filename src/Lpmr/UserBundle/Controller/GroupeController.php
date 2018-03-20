@@ -9,7 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Groupe controller.
@@ -21,20 +22,29 @@ class GroupeController extends Controller
      * Lists all groupe entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $groupes = $em->getRepository('LpmrUserBundle:Groupe')->findAll();
         $students = $em->getRepository("LpmrUserBundle:Etudiant")->findAll();
-        // $form = $this->createFormBuilder()
-        // ->add('nbStudents', InputType::class)
-        // ->add('save', SubmitType::class)
-        // ->getForm()
-;
+        $form = $this->createFormBuilder()
+        ->add('nbStudents', NumberType::class)
+        ->add('generate', SubmitType::class)
+        ->setAction($this->generateUrl('groupe_index'))
+        ->getForm()
+        ;
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            return var_dump($form->getData());
+        }
+
+
         return $this->render('groupe/index.html.twig', array(
             'groupes' => $groupes,
-            'studentLength' => count($students)
+            'students' => $students,
+            "formGenerate" => $form->createView()
         ));
     }
 
