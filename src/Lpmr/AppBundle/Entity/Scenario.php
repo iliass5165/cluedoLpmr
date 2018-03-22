@@ -124,7 +124,7 @@ class Scenario
     public function addFkElement(\Lpmr\AppBundle\Entity\Element $fkElement)
     {
         $this->fkElement[] = $fkElement;
-
+        
         return $this;
     }
 

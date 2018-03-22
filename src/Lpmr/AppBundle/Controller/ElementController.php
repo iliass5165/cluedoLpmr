@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Element controller.
@@ -185,7 +186,14 @@ class ElementController extends Controller
         ;
     }
 
-
+    public function getIndiceAction($name)
+    {
+        //be sure it'is an AJAX call
+        // be sure of the Goupe TOken
+        
+        $response = new BinaryFileResponse($this->getParameter('upload_dir').$name);
+        return $response;
+    }
 
 
 

@@ -51,3 +51,9 @@ scenario_get_selected_elements:
     methods:  [POST]
     options:
         expose: true
+
+
+scenario_get_qr_code:
+    path: /qrcodes
+    defaults: { _controller: "LpmrAppBundle:Scenario:getQrCodes" }
+    methods:  [GET]
