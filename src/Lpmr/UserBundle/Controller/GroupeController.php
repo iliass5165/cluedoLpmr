@@ -229,26 +229,37 @@ class GroupeController extends Controller
     }
 
     public function getOneGroupeAction(Request $request){
+        //if/else ajax
+        $content = $request->getContent();
+        if($content)
+        {
+            $jsonContent = json_decode($content);
+            if($jsonContent->code)
+            {
+                $em = $this->getDoctrine()->getManager();
+                $groupe = $em->getRepository("LpmrUserBundle:Groupe")->findByCode($jsonContent->code);
+                if(count($groupe) > 0)
+                {
+                    $groupe = $groupe[0];
+                    if(!$groupe->getToken() || ($groupe->getToken() != null && $jsonContent->token == null))
+                    {
+                        $groupe->setToken(bin2hex(random_bytes(10)));
+                        $em->persist($groupe);
+                        $em->flush();
+                        $response = json_encode(["code"=>$groupe->getCode(), "token"=>$groupe->getToken()]);
+                        return new Response($response);
+                    }
+                }
+                else
+                {
+                    return new JsonResponse(["error" => "No group found"]);
+                }
+                
+            }
+            return new JsonResponse(["error" => "Empty code"]);
+        }
 
-     $content = $this->getContentAsArray($request);
-     $em = $this->getDoctrine()->getManager();
-     $groupe = new Groupe();
-     $groupe = $em->getRepository('LpmrUserBundle:Groupe')->findOneBy(array('code' => $content->get('code')));
-
-     if($groupe != null){
-       $chaine = ('abcdefghijklmnopqrstuvwxyz0123456789');
-       $token = str_shuffle(substr($chaine, 0, 32));
-       if($content->get('token') == null ){
-         $groupe->setToken($token);
-         $em->persist($groupe);
-         $em->flush();
-       }
-
-       return new JsonResponse($groupe->getToken());
-     }
-       return new JsonResponse(null);
-
-
+        return new JsonResponse(["error" => "Empty request"]);
      }
 
      protected function getContentAsArray(Request $request){
