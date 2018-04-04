@@ -23,10 +23,6 @@ groupe_delete:
     defaults: { _controller: "LpmrUserBundle:Groupe:delete" }
     methods:  DELETE
 
-api_get_a_groupe:
-    path:     /api/login
-    defaults: { _controller: "LpmrUserBundle:Groupe:getOneGroupe" }
-    methods:  [POST]
 
 groupe_home:
     path:   /

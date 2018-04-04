@@ -11,3 +11,29 @@ fos_user:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+
+api_get_a_groupe:
+    path:     /api/login
+    defaults: { _controller: "LpmrUserBundle:Groupe:getOneGroupe" }
+    methods:  [POST]
+
+api_get_elements:
+    path:     /api/elements
+    defaults: { _controller: "LpmrAppBundle:Element:getElements" }
+    methods:  [GET]
+
+api_post_elements:
+    path:     /api/elements
+    defaults: { _controller: "LpmrAppBundle:Element:postElements" }
+    methods:  [POST]
+
+api_post_scanned_element:
+    path:     /api/elements/scanned
+    defaults: { _controller: "LpmrAppBundle:Element:postScannedElement" }
+    methods:  [POST]
+
+element_get_indice:
+    path: /api/elements/{name}
+    defaults: { _controller: "LpmrAppBundle:Element:getIndice" }
+    methods: GET

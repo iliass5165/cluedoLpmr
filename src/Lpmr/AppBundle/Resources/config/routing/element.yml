@@ -23,12 +23,10 @@ element_delete:
     defaults: { _controller: "LpmrAppBundle:Element:delete" }
     methods:  DELETE
 
-element_get_indice:
-    path: /indice/{name}
-    defaults: { _controller: "LpmrAppBundle:Element:getIndice" }
-    methods: GET
 
-element_json:
-    path:     /api/
-    defaults: { _controller: "LpmrAppBundle:Element:getElements" }
-    methods:  [GET]
+element_set_used_in_crime:
+    path: /crimeElements
+    defaults: { _controller: "LpmrAppBundle:Element:setCrimeElements" }
+    methods:  [POST]
+    options:
+        expose: true

@@ -48,11 +48,15 @@
                           <div class="col s12 m3 l2">
                               <div class="card">
                                   <div class="card-image">
-                                      <img src="../../images/rj45.jpg">
+                                      <img src="{{asset('images/rj45.jpg')}}">
                                   </div>
                                   <div class="card-content" style="text-align:center;">
                                       <input class="checkElement" name='check_armes' type="checkbox" id="element_{{ element.id }}" value="{{ element.id }}"  />
                                       <label for='element_{{ element.id }}'>{{ element.nom }}</label>
+                                    <div>
+                                        <input class="radio_elements" name='radio_elements_arme' type="radio" value="{{ element.id }}" id="ele_{{ element.id }}"  />
+                                       <label for='ele_{{ element.id }}'>Arme du crime</label>
+                                    </div>
                                   </div>
                                   <div class="card-action" style="text-align:center;">
                                       <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
@@ -81,11 +85,16 @@
                           <div class="col s12 m3 l2">
                               <div class="card">
                                   <div class="card-image">
-                                      <img src="../../images/map.png">
+                                      <img src="{{asset('images/map.png')}}">
                                   </div>
                                   <div class="card-content" style="text-align:center;">
+                                   
                                       <input name='check_lieux' type="checkbox" id="element_{{ element.id }}"  class="checkElement" value="{{ element.id }}"/>
                                       <label for='element_{{ element.id }}'>{{ element.nom }}</label>
+                                      <div>
+                                       <input class="radio_elements" name='radio_elements_lieux' type="radio" value="{{ element.id }}" id="ele_{{ element.id }}"  />
+                                       <label for='ele_{{ element.id }}'>Lien du crime</label>
+                                      </div>
                                   </div>
                                   <div class="card-action" style="text-align:center;">
                                       <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
@@ -114,11 +123,15 @@
                           <div class="col s12 m3 l2">
                               <div class="card">
                                   <div class="card-image">
-                                      <img src="../../images/person.png">
+                                      <img src="{{asset('images/person.png')}}">
                                   </div>
                                   <div class="card-content" style="text-align:center;">
                                       <input name='check_persos' type="checkbox" id="element_{{ element.id }}" class="checkElement" value="{{ element.id }}"/>
                                       <label for='element_{{ element.id }}'>{{ element.nom }}</label>
+                                      <div>
+                                        <input class="radio_elements" name='radio_elements_perso' type="radio" value="{{ element.id }}" id="ele_{{ element.id }}"  />
+                                       <label for='ele_{{ element.id }}'>Coupable</label>
+                                      </div>
                                   </div>
                                   <div class="card-action" style="text-align:center;">
                                       <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">

@@ -30,7 +30,9 @@ class GroupeController extends Controller
         $students = $em->getRepository("LpmrUserBundle:Etudiant")->findAll();
         
         $form = $this->createFormBuilder()
-        ->add('nbStudents', NumberType::class)
+        ->add('nbStudents', NumberType::class, [
+            'label' => "test"
+        ])
         ->add('generate', SubmitType::class)
         ->setAction($this->generateUrl('groupe_index'))
         ->getForm()
@@ -47,7 +49,12 @@ class GroupeController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             $nbStudents = $form->getData()['nbStudents'];    
-            
+            $groupeNum = 1;
+            if(count($groupes) > 0)
+            {
+                $groupeNum = (end($groupes)->getId()) + 1;
+            }
+
             while(count($studentsWithoutGroup) >= $nbStudents) 
             {
                 $code = rand(11111111, 99999999);
@@ -56,6 +63,7 @@ class GroupeController extends Controller
                     $code = rand(11111111, 99999999);
                 }
                 $groupe = new Groupe();
+                $groupe->setNom("groupe".$groupeNum);
                 $groupe->setCode($code);
                 $groupe->setNbpointglobal(0);
                 $groupe->setAnnee(new \DateTime());
@@ -69,6 +77,7 @@ class GroupeController extends Controller
                 }
 
                  $em->persist($groupe);
+                $groupeNum++;
             }
                 
             if(count($studentsWithoutGroup) > 0)
@@ -80,6 +89,7 @@ class GroupeController extends Controller
                 }
                 
                 $groupe = new Groupe();
+                $groupe->setNom("groupe".$groupeNum);
                 $groupe->setCode($code);
                 $groupe->setNbpointglobal(0);
                 $groupe->setAnnee(new \DateTime());
@@ -89,6 +99,7 @@ class GroupeController extends Controller
                     unset($studentsWithoutGroup[$randStudent]);                  
                 }
                 $em->persist($groupe);
+                $groupeNum++;
             }
           
             $em->flush();
@@ -230,6 +241,10 @@ class GroupeController extends Controller
 
     public function getOneGroupeAction(Request $request){
         //if/else ajax
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        }
+
         $content = $request->getContent();
         if($content)
         {
@@ -247,19 +262,27 @@ class GroupeController extends Controller
                         $em->persist($groupe);
                         $em->flush();
                         $response = json_encode(["code"=>$groupe->getCode(), "token"=>$groupe->getToken()]);
-                        return new Response($response);
+                        return new Response($response, 200, [
+                            "Content-Type" => "application/json"
+                        ]);
                     }
                 }
                 else
                 {
-                    return new JsonResponse(["error" => "No group found"]);
+                    return new JsonResponse(["error" => "groupe invalide"], 403, [
+                        "Content-Type" => "application/json"
+                    ]);
                 }
                 
             }
-            return new JsonResponse(["error" => "Empty code"]);
+            return new JsonResponse(["error" => "code invalide"], 404, [
+                "Content-Type" => "application/json"
+            ]);
         }
 
-        return new JsonResponse(["error" => "Empty request"]);
+        return new JsonResponse(["error" => "requête invalide "], 404, [
+            "Content-Type" => "application/json"
+        ]);
      }
 
      protected function getContentAsArray(Request $request){

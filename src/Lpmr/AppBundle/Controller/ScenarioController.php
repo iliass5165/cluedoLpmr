@@ -79,7 +79,7 @@ class ScenarioController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            
             return $this->redirectToRoute('scenario_edit', array('id' => $scenario->getId()));
         }
 
@@ -149,16 +149,23 @@ class ScenarioController extends Controller
             $scenario->setSelectedScenario(1);
             $em->persist($scenario);
             $em->flush();
-            
+            $object = [];
             if(count($scenario->getFkElement()) > 0)
             {
+                $crimeElements = [];
                 $elementArray = [];
                 foreach($scenario->getFkElement() as $element)
                 {
+                    if($element->getUsedInCrime()){
+                        $crimeElements[] = $element->getId();
+                    }
                     $elementArray[] = $element->getId();
+                    
                 }
-            
-                return new JsonResponse(["status" => "success", "elements" => json_encode($elementArray)]);
+               
+                $object["elements"] = $elementArray;
+                $object["crimeElements"] = $crimeElements;
+                return new JsonResponse($object, 200);
             }
             
 
@@ -213,9 +220,9 @@ class ScenarioController extends Controller
 
     public function getSelectedElementsOfSelectedScenarioAction(Request $request)
     {
-        if (!$request->isXmlHttpRequest()) {
-            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
-        }
+        // if (!$request->isXmlHttpRequest()) {
+        //     return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        // }
         //json {"scenario": ":id"}
         $content = $request->getContent();
         $jsonContent = json_decode($content);
@@ -223,22 +230,35 @@ class ScenarioController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
             $scenario = $em->getRepository("LpmrAppBundle:Scenario")->find($jsonContent->scenario);
+            $object = [];
+            
+            
             
             if(count($scenario->getFkElement()) > 0)
-            {
+            {   
+                $crimeElements = [];
                 $elementArray = [];
                 foreach($scenario->getFkElement() as $element)
                 {
+                    if($element->getUsedInCrime()){
+                        $crimeElements[] = $element->getId();
+                    }
                     $elementArray[] = $element->getId();
+                    
                 }
-                return new JsonResponse(["elements" => json_encode($elementArray)]);
+                
+                $object["elements"] = $elementArray;
+                $object["crimeElements"] = $crimeElements;
+                return new JsonResponse($object, 200);
             }
             else
             {
-                return new JsonResponse(["elements" => null]);
+                return new JsonResponse(["elements" => null, "crimeElements" => null ], 200);
             }
-            return new JsonResponse(["status" => "Error"]);
+            
+            
         }
+        return new JsonResponse(["status" => "Error"], 500);
     }
 
     public function getQrCodesAction()

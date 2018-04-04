@@ -4,6 +4,7 @@ namespace Lpmr\AppBundle\Controller;
 
 use Lpmr\AppBundle\Entity\Element;
 use Lpmr\AppBundle\Entity\CategorieElement;
+use Lpmr\AppBundle\Entity\GroupeElements;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +50,7 @@ class ElementController extends Controller
         $form = $this->createForm('Lpmr\AppBundle\Form\ElementType', $element);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $element->setUsedInCrime(false);
             $file = $element->getUrl();
             $fileType = explode("/",$file->getMimeType())[0];
             if($fileType == "image")
@@ -110,35 +112,42 @@ class ElementController extends Controller
         $deleteForm = $this->createDeleteForm($element);
         $editForm = $this->createForm('Lpmr\AppBundle\Form\ElementType', $element);
         $editForm->handleRequest($request);
-
+        $url = $element->getUrl();
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $file = $element->getUrl();
-            $fileType = explode("/",$file->getMimeType())[0];
-            if($fileType == "image")
+            if($file)
             {
-                $extension = $file->guessExtension();
-                $filename = md5(uniqid()).".".$extension;
-                $file->move(
-                    $this->getParameter('upload_dir'),
-                    $filename
-                );
-                $element->setUrl($filename);
-            }
-            elseif($fileType == "video")
-            {
-                //force to mp4
-                $filename = md5(uniqid()).".mp4";
-                $file->move(
-                    $this->getParameter('upload_dir'),
-                    $filename
-                );
-                $element->setUrl($filename);
+                $fileType = explode("/",$file->getMimeType())[0];
+                if($fileType == "image")
+            
+                {
+                    $extension = $file->guessExtension();
+                    $filename = md5(uniqid()).".".$extension;
+                    $file->move(
+                        $this->getParameter('upload_dir'),
+                        $filename
+                    );
+                    $element->setUrl($filename);
+                }
+                elseif($fileType == "video")
+                {
+                    //force to mp4
+                    $filename = md5(uniqid()).".mp4";
+                    $file->move(
+                        $this->getParameter('upload_dir'),
+                        $filename
+                    );
+                    $element->setUrl($filename);
+                }
+                else
+                {
+                    new UnsupportedMediaTypeHttpException("type of uploaded ressource invalide!");
+                }
             }
             else
             {
-                new UnsupportedMediaTypeHttpException("type of uploaded ressource invalide!");
+                $element->setUrl($url);
             }
-
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -186,6 +195,7 @@ class ElementController extends Controller
         ;
     }
 
+
     public function getIndiceAction($name)
     {
         //be sure it'is an AJAX call
@@ -193,6 +203,43 @@ class ElementController extends Controller
         
         $response = new BinaryFileResponse($this->getParameter('upload_dir').$name);
         return $response;
+    }
+
+    public function setCrimeElementsAction(Request $request){
+        // if (!$request->isXmlHttpRequest()) {
+        //     return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        // }
+
+        $jsonContent = json_decode($request->getContent());
+        
+        
+        if($jsonContent ==! null){
+            
+            $em = $this->getDoctrine()->getManager();
+            $element = $em->getRepository("LpmrAppBundle:Element")->find($jsonContent->selectedId);
+            if($element == null){
+                return new JsonResponse(["status" => "Error no element found"]);
+            }
+            
+            $otherElemenents = $em->getRepository("LpmrAppBundle:Element")->findByFkCategorieElement($element->getFkCategorieElement());
+            if(count($otherElemenents) > 0)
+            {
+                foreach($otherElemenents as $ele){
+                    $ele->setUsedInCrime(false);
+                    $em->persist($ele);
+                }
+            }
+            
+
+            $element->setUsedInCrime(true);
+            $em->persist($element);
+            $em->flush();
+            return new JsonResponse(["status" => "done"]);
+
+            
+        }
+        return new JsonResponse(["status" => "Error"]);
+
     }
 
 
@@ -214,51 +261,120 @@ class ElementController extends Controller
 
 
 
+    public function getElementsAction(Request $request){
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        }
 
+        $em = $this->getDoctrine()->getManager();
+        $scenario = $em->getRepository("LpmrAppBundle:Scenario")->findBySelectedScenario(1);
+        $elements = $scenario[0]->getFkElement();
+        if(count($elements) > 0)
+        {
+            $arrayOfElements = [];
+            foreach($elements as $element)
+            {
+                $object = ["id" => $element->getId(),"name" => $element->getNom(), "category" => $element->getFkCategorieElement()->getNom()];
+                $arrayOfElements[] = $object;
+            }
+            return new JsonResponse($arrayOfElements);
+        }
+        else
+        {
+            return new JsonResponse(["error" => "Empty data"]);
+        }
+   }
 
-    public function getElementsAction(){
+   public function postElementsAction(Request $request){
+    // if (!$request->isXmlHttpRequest()) {
+    //     return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+    // }
+    $jsonContent = json_decode($request->getContent());
+    if($jsonContent != null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $groupe = $em->getRepository("LpmrUserBundle:Groupe")->findOneByCode($jsonContent->code);
+        
+        foreach($jsonContent->clues as $element){
+            $anElement = $em->getRepository("LpmrAppBundle:Element")->find($element->id);
+            
 
-       $em = $this->getDoctrine()->getManager();
-       $elements = new Element();
-       $elements = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 1));
+            $groupeElements = $em->getRepository("LpmrAppBundle:GroupeElements")->findOneBy(["groupe" => $groupe, "element" => $anElement]);
+            if($groupeElements != null)
+            {
+                $groupeElements->setSelected($element->checked);
+            }
+            else
+            {
+                $groupeElements = new GroupeElements();
+                $groupeElements->setSelected($element->checked);
+                $groupeElements->setElement($anElement);
+                $groupeElements->setGroupe($groupe);
+            }
+            $em->persist($groupeElements);
+        }
 
+        $em->flush();
+        return new JsonResponse($jsonContent, 200);
+    }
 
-       //var_dump($elements);
+    return new JsonResponse(["status" => "Erreur lors de la récupération du contenu #ptEls"], 500);
+   }
 
-       $elements1 = new Element();
-       $elements1 = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 2));
+   public function postScannedElementAction(Request $request){
+    // if (!$request->isXmlHttpRequest()) {
+    //     return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+    // }
+    $jsonContent = json_decode($request->getContent());
+    
+    if($jsonContent != null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $groupe = $em->getRepository("LpmrUserBundle:Groupe")->findOneByCode($jsonContent->code);
+        $element = $em->getRepository("LpmrAppBundle:Element")->findOneByUrl($jsonContent->ressource);
+        
+        if($groupe == null || $element == null){
+            return new JsonResponse(["status" => " Element ou groupe non valide !"], 500);
+        }
+        else
+        {
+            if($groupe != null && $element != null){
+                $groupeElements = $em->getRepository("LpmrAppBundle:GroupeElements")->findOneBy(["groupe" => $groupe, "element" => $element]);
+            }
+            else{
+                return new JsonResponse(["status" => "Invalide groupe ou element #ptScEls"], 500);   
+            }
 
+            if($groupeElements != null)
+            {
+                
+                if($groupeElements->getScanned() == null){
+                    $groupeElements->setScanned(true);    
+                    $groupe->setNbPointGlobal($groupe->getNbPointGlobal() + 10);
+                }
+                else
+                {
+                    //diminuer les points
+                    $groupe->setNbPointGlobal($groupe->getNbPointGlobal() - 10);
+                }
+            }
+            else
+            {
+                $groupe->setNbPointGlobal($groupe->getNbPointGlobal() + 10);
+                $groupeElements = new GroupeElements();
+                $groupeElements->setScanned(true);
+                $groupeElements->setElement($element);
+                $groupeElements->setGroupe($groupe);
+            }
+            
+            $em->persist($groupeElements);
+            $em->flush();
+            return new JsonResponse(["status" => "done"], 200);
+        }
+        
 
-       $elements2 = new Element();
-       $elements2 = $em->getRepository('LpmrAppBundle:Element')->findBy(array('fkCategorieElement' => 2));
-
-
-       $api = array();
-       array_push($api, 'armes', $armes);
-       array_push($api, 'lieux', $lieux);
-       array_push($api, 'personnages', $personnages);
-       //var_dump($api);
-
-       $encoder = new JsonEncoder();
-       $normalizer = new GetSetMethodNormalizer();
-
-       $serializer = new Serializer(array($normalizer), array($encoder));
-       $jsonContent = $serializer->serialize(array('armes' => $elements, 'lieux' => $elements1, 'personnages' => $elements2), 'json');
-
-
-       $response = new Response($jsonContent);
-       $response->headers->set('Content-Type', 'application/json');
-       return $response;
-
-
-     }
-
-     protected function getContentAsArray(Request $request){
-       $content = $request->getContent();
-
-       if(empty($content)){
-           throw new BadRequestHttpException("Content is empty");
-       }
-       return new ArrayCollection(json_decode($content, true));
+      
+    }
+    return new JsonResponse(["status" => "Erreur lors de la récupération du contenu #ptScEls"], 500);
    }
 }

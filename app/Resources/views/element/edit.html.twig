@@ -6,13 +6,15 @@
     <h1>Editer Element</h1>
 {% set mediaType = element.url|split('.') %} 
 <div class="col s12">
-{% if mediaType[1] == 'mp4'%}
-<video class="responsive-img col l6 offset-l3" controls>
-  <source src="{{ asset('uploads/elements/' ~ element.url) }}" type="video/mp4">
-Your browser does not support the video tag.
-</video> 
-{% else %}
-      <img class="responsive-img col l6 offset-l3" src="{{ asset('uploads/elements/' ~ element.url) }}">
+{% if element.url %}
+  {% if mediaType[1] == 'mp4'%}
+  <video class="responsive-img col l6 offset-l3" controls>
+    <source src="{{ asset('uploads/elements/' ~ element.url) }}" type="video/mp4">
+  Your browser does not support the video tag.
+  </video> 
+  {% else %}
+        <img class="responsive-img col l6 offset-l3" src="{{ asset('uploads/elements/' ~ element.url) }}">
+  {% endif %}
 {% endif %}
 </div>
 
