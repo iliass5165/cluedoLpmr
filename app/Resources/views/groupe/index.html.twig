@@ -25,6 +25,7 @@
                 <th>Nom</th>
                 <th>Code</th>
                 <th>Nb personne</th>
+                <th>Activer</th>
                 <th>Annee</th>
                 <th>Actions</th>
             </tr>
@@ -35,6 +36,7 @@
                 <td> {{groupe.nom}} </td>
                 <td>{{ groupe.code }}</td>
                 <td>{{ groupe.etudiants|length }}</td>
+                <th> {% if groupe.activated %}oui {% else %} non {% endif %}  </th>
                 <td>{% if groupe.annee %}{{ groupe.annee|date('Y') }}{% endif %}</td>
                 <td>
                     <a class="btn-floating btn-large " href="{{ path('groupe_show', { 'id': groupe.id }) }}">

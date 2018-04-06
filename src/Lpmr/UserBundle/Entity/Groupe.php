@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="groupe")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Groupe
 {
@@ -65,6 +66,13 @@ class Groupe
     * @ORM\OneToMany(targetEntity="Lpmr\AppBundle\Entity\GroupeElements", mappedBy="groupe")
     */
     private $groupeElement;
+
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="activated", type="boolean", nullable=false)
+     */
+    private $activated;
 
     /**
      * Get id
@@ -269,5 +277,37 @@ class Groupe
     public function getGroupeElement()
     {
         return $this->groupeElement;
+    }
+
+    /**
+     * Set activated
+     *
+     * @param integer $activated
+     *
+     * @return Groupe
+     */
+    public function setActivated($activated)
+    {
+        $this->activated = $activated;
+
+        return $this;
+    }
+
+    /**
+     * Get activated
+     *
+     * @return integer
+     */
+    public function getActivated()
+    {
+        return $this->activated;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    function onPrePersist() {
+        // set default date
+        $this->activated = false;
     }
 }

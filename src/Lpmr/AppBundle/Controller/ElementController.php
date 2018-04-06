@@ -294,7 +294,11 @@ class ElementController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $groupe = $em->getRepository("LpmrUserBundle:Groupe")->findOneByCode($jsonContent->code);
-        
+        if($jsonContent->lock)
+        {
+            $groupe->setActivated(false);
+            $em->persist($groupe);
+        }
         foreach($jsonContent->clues as $element){
             $anElement = $em->getRepository("LpmrAppBundle:Element")->find($element->id);
             
@@ -315,7 +319,7 @@ class ElementController extends Controller
         }
 
         $em->flush();
-        return new JsonResponse($jsonContent, 200);
+        return new JsonResponse(["status" => "Done"], 200);
     }
 
     return new JsonResponse(["status" => "Erreur lors de la récupération du contenu #ptEls"], 500);
@@ -338,12 +342,10 @@ class ElementController extends Controller
         }
         else
         {
-            if($groupe != null && $element != null){
-                $groupeElements = $em->getRepository("LpmrAppBundle:GroupeElements")->findOneBy(["groupe" => $groupe, "element" => $element]);
-            }
-            else{
-                return new JsonResponse(["status" => "Invalide groupe ou element #ptScEls"], 500);   
-            }
+            
+            $groupeElements = $em->getRepository("LpmrAppBundle:GroupeElements")->findOneBy(["groupe" => $groupe, "element" => $element]);
+            
+            
 
             if($groupeElements != null)
             {

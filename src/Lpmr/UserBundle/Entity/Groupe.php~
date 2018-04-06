@@ -66,6 +66,13 @@ class Groupe
     */
     private $groupeElement;
 
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="activated", type="integer", nullable=false, options={"default" : 0})
+     */
+    private $activated;
+
     /**
      * Get id
      *
@@ -236,4 +243,38 @@ class Groupe
 
 
 
+
+    /**
+     * Add groupeElement
+     *
+     * @param \Lpmr\AppBundle\Entity\GroupeElements $groupeElement
+     *
+     * @return Groupe
+     */
+    public function addGroupeElement(\Lpmr\AppBundle\Entity\GroupeElements $groupeElement)
+    {
+        $this->groupeElement[] = $groupeElement;
+
+        return $this;
+    }
+
+    /**
+     * Remove groupeElement
+     *
+     * @param \Lpmr\AppBundle\Entity\GroupeElements $groupeElement
+     */
+    public function removeGroupeElement(\Lpmr\AppBundle\Entity\GroupeElements $groupeElement)
+    {
+        $this->groupeElement->removeElement($groupeElement);
+    }
+
+    /**
+     * Get groupeElement
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroupeElement()
+    {
+        return $this->groupeElement;
+    }
 }

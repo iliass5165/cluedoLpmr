@@ -241,9 +241,9 @@ class GroupeController extends Controller
 
     public function getOneGroupeAction(Request $request){
         //if/else ajax
-        if (!$request->isXmlHttpRequest()) {
-            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
-        }
+        // if (!$request->isXmlHttpRequest()) {
+        //     return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        // }
 
         $content = $request->getContent();
         if($content)
@@ -252,16 +252,20 @@ class GroupeController extends Controller
             if($jsonContent->code)
             {
                 $em = $this->getDoctrine()->getManager();
-                $groupe = $em->getRepository("LpmrUserBundle:Groupe")->findByCode($jsonContent->code);
-                if(count($groupe) > 0)
+                $groupe = $em->getRepository("LpmrUserBundle:Groupe")->findOneByCode($jsonContent->code);
+                if($groupe != null)
                 {
-                    $groupe = $groupe[0];
+                    if($groupe->getActivated() == false){
+                        return new JsonResponse(["activated"=> $groupe->getActivated()]);
+                    }
+
                     if(!$groupe->getToken() || ($groupe->getToken() != null && $jsonContent->token == null))
                     {
                         $groupe->setToken(bin2hex(random_bytes(10)));
                         $em->persist($groupe);
                         $em->flush();
-                        $response = json_encode(["code"=>$groupe->getCode(), "token"=>$groupe->getToken()]);
+                        
+                        $response = json_encode(["code"=>$groupe->getCode(), "token"=>$groupe->getToken(), "activated"=> $groupe->getActivated() ]);
                         return new Response($response, 200, [
                             "Content-Type" => "application/json"
                         ]);
