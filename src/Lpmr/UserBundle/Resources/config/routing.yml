@@ -12,3 +12,4 @@ lpmr_user_etudiant:
 lpmr_user_homepage:
     resource: "@LpmrUserBundle/Resources/config/routing/groupe.yml"
     prefix:   /
+    

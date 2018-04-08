@@ -265,7 +265,7 @@ class GroupeController extends Controller
                         $em->persist($groupe);
                         $em->flush();
                         
-                        $response = json_encode(["code"=>$groupe->getCode(), "token"=>$groupe->getToken(), "activated"=> $groupe->getActivated() ]);
+                        $response = json_encode(["code"=>$groupe->getCode(), "token"=>$groupe->getToken(), "activated"=> $groupe->getActivated(), "launchedAt"=> $groupe->getLaunchedAt() ]);
                         return new Response($response, 200, [
                             "Content-Type" => "application/json"
                         ]);
@@ -288,6 +288,45 @@ class GroupeController extends Controller
             "Content-Type" => "application/json"
         ]);
      }
+
+     public function setLaunchTimeAction(Request $request){
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        }
+
+        $jsonContent = json_decode($request->getContent());
+        if($jsonContent != null)
+        {
+            $em = $this->getDoctrine()->getManager();
+            $groupe = $em->getRepository("LpmrUserBundle:Groupe")->find($jsonContent->groupeId);
+            if($groupe){
+                $groupe->setLaunchedAt($jsonContent->launchedAt);
+                $groupe->setActivated(true);
+                $em->persist($groupe);
+                $em->flush();
+                return new JsonResponse(["status" => "Done"], 200);
+            }
+            else{
+                return new JsonResponse(["status" => "Erreur lors de la récupération du groupe"], 500);
+            }
+        }
+        return new JsonResponse(["status" => "Erreur lors de la récupération du contenu"], 500);
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
      protected function getContentAsArray(Request $request){
        $content = $request->getContent();

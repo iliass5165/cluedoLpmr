@@ -73,6 +73,13 @@ class Groupe
      * @ORM\Column(name="activated", type="boolean", nullable=false)
      */
     private $activated;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="launched_at", type="integer", nullable=true)
+     */
+    private $launchedAt;
 
     /**
      * Get id
@@ -309,5 +316,31 @@ class Groupe
     function onPrePersist() {
         // set default date
         $this->activated = false;
+    }
+
+    
+
+    /**
+     * Set launchedAt
+     *
+     * @param integer $launchedAt
+     *
+     * @return Groupe
+     */
+    public function setLaunchedAt($launchedAt)
+    {
+        $this->launchedAt = $launchedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get launchedAt
+     *
+     * @return integer
+     */
+    public function getLaunchedAt()
+    {
+        return $this->launchedAt;
     }
 }

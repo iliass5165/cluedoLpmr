@@ -2,56 +2,54 @@
 
 {% block body %}
 
-<div class="row">
-  <div class="col s12 m3 l5"></div>
-    <h1>Suivi des groupes</h1>
-  <div class="col s12 m3 l5"></div>
-</div>
-
-<div class="row">
-  <div class="col s12 13"></div>
-  <div class="input-field col s12 m12">
-
-    <table class="striped">
-      <thead>
-          <tr>
-            <th>Groupe</th>
-            <th>Progression</th>
-            <th>Temps</th>
-            <th>Points</th>
-            <th>Info</th>
-            <th>Modifier</th>
-          </tr>
-      </thead>
-      <tbody>
+<div class="container">
+  <div class="row">
+  <h1>Suivi des groupes</h1>
+  
+      <table  class="striped datatable col s12 l12 m12" >
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Avancement</th>
+                <th>Statut</th>
+                <th>Temps</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for groupe in groupes %}
-        <tr>
-          <td>{{ groupe.nom }}</td>
-          <td>
-            <div class="progress col s6 m6">
-              <div class="determinate" style="width: 25%"></div>
-            </div>
-          </td>
-          <td></td>
-          <td>{{ groupe.nbpointglobal}}</td>
-          <td>
-              <a class="btn-floating btn-large" href="{{ path('groupe_show', {'id': groupe.id}) }}">
-                <i class="large material-icons">info</i>
-              </a>
-          </td>
-          <td>
-            <a class="btn-floating btn-large" href="{{ path('groupe_edit', {'id': groupe.id}) }}">
-              <i class="large material-icons">mode_edit</i>
-            </a>
-          </td>
-        </tr>
+            <tr id="groupe{{groupe.id}}" data-id="{{groupe.id}}">
+                {% if groupe.launchedAt %}
+                    <input type="hidden" value="{{groupe.id}}" data-launchedAt="{{groupe.launchedAt}}">
+                {% endif %}
+                <td> {{groupe.nom}} </td>
+                <td class="avancement">ava{{groupe.id}}</td>
+                <td class="statut"> {% if groupe.activated %}Activé{% else %}Desactivé{% endif %} </td>
+                <td  id="timer{{groupe.id}}">
+                {% if groupe.activated %}
+                
+                {% else %}
+                00:00:00
+                {% endif %}
+                </td>
+                <td class="action">
+                    <a class="btn-floating btn-large " href="{{ path('groupe_show', { 'id': groupe.id }) }}">
+                      <i class="large material-icons">info</i>
+                    </a>
+                    <button class="launchButton btn right">Lancer</button>
+                </td>
+            </tr>
         {% endfor %}
-      </tbody>
+        </tbody>
     </table>
-
-    <div class="col s12 m3 m13"></div>
-
+      
+      
   </div>
 </div>
+
+
+{% endblock %}
+{% block javascripts %}
+<script src="{{asset('js/scripts/groupe.js')}}"></script>
 
 {% endblock %}

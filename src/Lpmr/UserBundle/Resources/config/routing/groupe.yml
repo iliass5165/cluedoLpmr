@@ -27,3 +27,10 @@ groupe_delete:
 groupe_home:
     path:   /
     defaults: { _controller: "LpmrUserBundle:Groupe:home" }
+
+set_launched_at:
+    path:     /launchedAt
+    defaults: { _controller: "LpmrUserBundle:Groupe:setLaunchTime" }
+    methods:  POST
+    options:
+        expose: true

@@ -36,7 +36,7 @@ class GroupeElements
     /**
      * @var bool
      *
-     * @ORM\Column(name="selected", type="boolean", nullable=true)
+     * @ORM\Column(name="selected", type="boolean", nullable=false)
      */
     private $selected;
 
@@ -128,5 +128,29 @@ class GroupeElements
     public function getGroupe()
     {
         return $this->groupe;
+    }
+
+    /**
+     * Set scanned
+     *
+     * @param boolean $scanned
+     *
+     * @return GroupeElements
+     */
+    public function setScanned($scanned)
+    {
+        $this->scanned = $scanned;
+
+        return $this;
+    }
+
+    /**
+     * Get scanned
+     *
+     * @return boolean
+     */
+    public function getScanned()
+    {
+        return $this->scanned;
     }
 }
