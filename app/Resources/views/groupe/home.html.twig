@@ -11,6 +11,7 @@
             <tr>
                 <th>Nom</th>
                 <th>Avancement</th>
+                <th>Nb point</th>
                 <th>Statut</th>
                 <th>Temps</th>
                 <th>Actions</th>
@@ -24,6 +25,7 @@
                 {% endif %}
                 <td> {{groupe.nom}} </td>
                 <td class="avancement">ava{{groupe.id}}</td>
+                <td class="avancement">{{groupe.nbPointGlobal}}</td>
                 <td class="statut"> {% if groupe.activated %}Activé{% else %}Desactivé{% endif %} </td>
                 <td  id="timer{{groupe.id}}">
                 {% if groupe.activated %}
@@ -33,9 +35,9 @@
                 {% endif %}
                 </td>
                 <td class="action">
-                    <a class="btn-floating btn-large " href="{{ path('groupe_show', { 'id': groupe.id }) }}">
+                    {# <a class="btn-floating btn-large " href="{{ path('groupe_show', { 'id': groupe.id }) }}">
                       <i class="large material-icons">info</i>
-                    </a>
+                    </a> #}
                     <button class="launchButton btn right">Lancer</button>
                 </td>
             </tr>

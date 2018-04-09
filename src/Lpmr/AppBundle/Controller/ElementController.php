@@ -286,14 +286,17 @@ class ElementController extends Controller
    }
 
    public function postElementsAction(Request $request){
-    // if (!$request->isXmlHttpRequest()) {
-    //     return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
-    // }
+    if (!$request->isXmlHttpRequest()) {
+        return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+    }
     $jsonContent = json_decode($request->getContent());
     if($jsonContent != null)
     {
         $em = $this->getDoctrine()->getManager();
         $groupe = $em->getRepository("LpmrUserBundle:Groupe")->findOneByCode($jsonContent->code);
+        if($jsonContent->token != $groupe->getToken()){
+            return new JsonResponse(["status" => "wrong token"], 401);  
+        }
         if($jsonContent->lock)
         {
             $groupe->setActivated(false);
@@ -326,19 +329,23 @@ class ElementController extends Controller
    }
 
    public function postScannedElementAction(Request $request){
-    // if (!$request->isXmlHttpRequest()) {
-    //     return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
-    // }
+    if (!$request->isXmlHttpRequest()) {
+        return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+    }
     $jsonContent = json_decode($request->getContent());
     
     if($jsonContent != null)
     {
+ 
         $em = $this->getDoctrine()->getManager();
         $groupe = $em->getRepository("LpmrUserBundle:Groupe")->findOneByCode($jsonContent->code);
         $element = $em->getRepository("LpmrAppBundle:Element")->findOneByUrl($jsonContent->ressource);
         
         if($groupe == null || $element == null){
             return new JsonResponse(["status" => " Element ou groupe non valide !"], 500);
+        }
+        else if($groupe->getToken() != $jsonContent->token){
+            return new JsonResponse(['status' => "wrong token"], 403);
         }
         else
         {

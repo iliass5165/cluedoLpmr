@@ -12,8 +12,9 @@ $(document).ready(function(){
                 count = count - ((Math.floor(Date.now() / 1000)) - launchedAt);
                 counter = setInterval(function() {
                     count = count - 1;
-                    if (count == -1) {
+                    if (count < 0) {
                         clearInterval(counter);
+                        $("#timer"+id).html("0:0:0");
                         return;
                     }
                 

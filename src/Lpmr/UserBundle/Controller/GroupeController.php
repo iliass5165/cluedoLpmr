@@ -215,8 +215,22 @@ class GroupeController extends Controller
     */
     public function homeAction(){
       $em = $this->getDoctrine()->getManager();
+        
+       $groupes = $em->getRepository('LpmrUserBundle:Groupe')->findAll();
+    
+       
+        foreach($groupes as $groupe){
+            foreach($groupe->getGroupeElement() as $ge){
+                //todo
+                //show avancement
+                //show scanned element that are used in crime   
+            }
+            
+            
+        }
+        
+    
 
-      $groupes = $em->getRepository('LpmrUserBundle:Groupe')->findAll();
 
       return $this->render('groupe/home.html.twig', array(
           'groupes' => $groupes,
@@ -240,10 +254,10 @@ class GroupeController extends Controller
     }
 
     public function getOneGroupeAction(Request $request){
-        //if/else ajax
-        // if (!$request->isXmlHttpRequest()) {
-        //     return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
-        // }
+      
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 400);
+        }
 
         $content = $request->getContent();
         if($content)
@@ -312,16 +326,6 @@ class GroupeController extends Controller
         }
         return new JsonResponse(["status" => "Erreur lors de la récupération du contenu"], 500);
      }
-
-
-
-
-
-
-
-
-
-
 
 
 
