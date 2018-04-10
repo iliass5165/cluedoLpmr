@@ -150,6 +150,39 @@
                 </div>
               </li>
               <!-- liste des personnages -->
+              <!-- liste des faux indices -->
+              <li>
+                <div class="collapsible-header"><i class="material-icons circle">broken_image</i>Faux Indices</div>
+                <div class="collapsible-body #eeeeee grey lighten-3" >
+                  <div class="row">
+                    {% for element in elements %}
+                        {% if(element.fkCategorieElement.nom == "Faux indices") %}
+                          <div class="col s12 m3 l2">
+                              <div class="card">
+                                  <div class="card-image">
+                                      <center><i class="material-icons large">broken_image</i></center>
+                                  </div>
+                                  <div class="card-content" style="text-align:center;">
+                                      <input name='check_findices' type="checkbox" id="element_{{ element.id }}" class="checkElement" value="{{ element.id }}"/>
+                                      <label for='element_{{ element.id }}'>{{ element.nom }}</label>
+                                  </div>
+                                  <div class="card-action" style="text-align:center;">
+                                      <a class="btn-floating btn-large " href="{{ path('element_show', { 'id': element.id }) }}">
+                                          <i class="large material-icons">info</i>
+                                      </a>
+                                      <a class="btn-floating btn-large blue" href="{{ path('element_edit', { 'id': element.id }) }}">
+                                          <i class="large material-icons">mode_edit</i>
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                        {% endif %}
+                    {% endfor %}
+                  </div>
+                  <a class="btn-floating waves-effect waves-light red"  href="{{ path('element_new', { 'id': 2 }) }}"><i class="material-icons">add</i></a>
+                </div>
+              </li>
+              <!-- liste des personnages -->
             </ul>
           </div>
         </div>

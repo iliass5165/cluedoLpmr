@@ -267,15 +267,19 @@ class ElementController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $scenario = $em->getRepository("LpmrAppBundle:Scenario")->findBySelectedScenario(1);
-        $elements = $scenario[0]->getFkElement();
+        $scenario = $em->getRepository("LpmrAppBundle:Scenario")->findOneBySelectedScenario(1);
+        $elements = $scenario->getFkElement();
+        
         if(count($elements) > 0)
         {
             $arrayOfElements = [];
             foreach($elements as $element)
             {
-                $object = ["id" => $element->getId(),"name" => $element->getNom(), "category" => $element->getFkCategorieElement()->getNom()];
-                $arrayOfElements[] = $object;
+                if($element->getFkCategorieElement()->getNom() != "Faux indices")
+                {    
+                    $object = ["id" => $element->getId(),"name" => $element->getNom(), "category" => $element->getFkCategorieElement()->getNom()];
+                    $arrayOfElements[] = $object;
+                }
             }
             return new JsonResponse($arrayOfElements);
         }
