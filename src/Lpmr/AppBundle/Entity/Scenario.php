@@ -43,7 +43,7 @@ class Scenario
     private $fkElement;
 
     /**
-      * @ORM\Column(name="selectedScenario", type="boolean", options={"default":"0"})
+      * @ORM\Column(name="selectedScenario", type="boolean", nullable=true, options={"default":"0"})
      */
     private $selectedScenario;
 
