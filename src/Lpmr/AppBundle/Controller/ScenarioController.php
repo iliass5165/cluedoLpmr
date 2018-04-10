@@ -271,10 +271,13 @@ class ScenarioController extends Controller
             $qrcodes = [];
             foreach($indices as $indice)
             {
-                $qrcodes[] = $indice->getUrl();
+                $indices = [];
+                $indices['nom'] = $indice->getNom();
+                $indices['url'] = $indice->getUrl();
+                $qrcodes[] = $indices;
             }
         }
-        return new Response(dump($qrcodes));
+        return new JsonResponse($qrcodes);
     }
     
     
