@@ -264,17 +264,17 @@ class ScenarioController extends Controller
     public function getQrCodesAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $indices = ($em->getRepository('LpmrAppBundle:Scenario')->findBySelectedScenario(1)[0])->getFkElement();
+        $indices = $em->getRepository('LpmrAppBundle:Scenario')->findOneBySelectedScenario(1)->getFkElement();
         
         if(count($indices) > 0)
         {
             $qrcodes = [];
             foreach($indices as $indice)
             {
-                $indices = [];
-                $indices['nom'] = $indice->getNom();
-                $indices['url'] = $indice->getUrl();
-                $qrcodes[] = $indices;
+                $ind = [];
+                $ind['nom'] = $indice->getNom();
+                $ind['url'] = $indice->getUrl();
+                $qrcodes[] = $ind;
             }
         }
         return new JsonResponse($qrcodes);
