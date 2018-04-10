@@ -266,8 +266,7 @@ class ScenarioController extends Controller
         $em = $this->getDoctrine()->getManager();
         $indices = $em->getRepository('LpmrAppBundle:Scenario')->findOneBySelectedScenario(1)->getFkElement();
         
-        if(count($indices) > 0)
-        {
+       
             $qrcodes = [];
             foreach($indices as $indice)
             {
@@ -276,7 +275,7 @@ class ScenarioController extends Controller
                 $ind['url'] = $indice->getUrl();
                 $qrcodes[] = $ind;
             }
-        }
+        
         return new JsonResponse($qrcodes);
     }
     
