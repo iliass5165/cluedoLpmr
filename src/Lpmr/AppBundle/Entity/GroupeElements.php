@@ -36,7 +36,7 @@ class GroupeElements
     /**
      * @var bool
      *
-     * @ORM\Column(name="selected", type="boolean", nullable=false)
+     * @ORM\Column(name="selected", type="boolean", nullable=true)
      */
     private $selected;
 
