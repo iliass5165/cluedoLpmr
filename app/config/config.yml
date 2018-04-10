@@ -8,6 +8,7 @@ imports:
 parameters:
     locale: fr
     upload_dir: '%kernel.project_dir%/web/uploads/elements/'
+    apk_dir: '%kernel.project_dir%/web/uploads/'
 
 framework:
     #esi: ~

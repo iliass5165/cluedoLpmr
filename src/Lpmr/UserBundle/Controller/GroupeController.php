@@ -217,7 +217,8 @@ class GroupeController extends Controller
       $em = $this->getDoctrine()->getManager();
         
        $groupes = $em->getRepository('LpmrUserBundle:Groupe')->findAll();
-    
+       $elements = $em->getRepository('LpmrAppBundle:Element')->findAll();
+       
        
         foreach($groupes as $groupe){
             foreach($groupe->getGroupeElement() as $ge){
@@ -234,6 +235,7 @@ class GroupeController extends Controller
 
       return $this->render('groupe/home.html.twig', array(
           'groupes' => $groupes,
+          'elements' => $elements
       ));
     }
 

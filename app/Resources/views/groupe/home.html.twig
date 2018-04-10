@@ -6,11 +6,12 @@
   <div class="row">
   <h1>Suivi des groupes</h1>
   
-      <table  class="striped datatable col s12 l12 m12" >
+      <table  class="striped  col s12 l12 m12" >
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Avancement</th>
+                <th>indice de crime</th>
                 <th>Nb point</th>
                 <th>Statut</th>
                 <th>Temps</th>
@@ -18,14 +19,27 @@
             </tr>
         </thead>
         <tbody>
-        {% for groupe in groupes %}
+        {% for groupe in groupes | sort %}
+        {% set counterScanned = 0 %}
+        {% set counterCrime = 0 %}
+        {% for ge in groupe.groupeElement %}
+            {% if ge.scanned %}
+            {% if not ge.element.usedInCrime %} 
+                {% set counterCrime = counterCrime + 1 %}
+             {% endif %}
+                {% set counterScanned = counterScanned + 1 %}
+            {% endif %}
+            
+        {% endfor %}
+        
             <tr id="groupe{{groupe.id}}" data-id="{{groupe.id}}">
                 {% if groupe.launchedAt %}
                     <input type="hidden" value="{{groupe.id}}" data-launchedAt="{{groupe.launchedAt}}">
                 {% endif %}
                 <td> {{groupe.nom}} </td>
-                <td class="avancement">ava{{groupe.id}}</td>
-                <td class="avancement">{{groupe.nbPointGlobal}}</td>
+                <td class="avancement"> {{counterScanned}} / {{elements | length - 2}}</td>
+                <td> {{counterCrime}} / 3</td>
+                <td class="nbPoint">{{groupe.nbPointGlobal}}</td>
                 <td class="statut"> {% if groupe.activated %}Activé{% else %}Desactivé{% endif %} </td>
                 <td  id="timer{{groupe.id}}">
                 {% if groupe.activated %}

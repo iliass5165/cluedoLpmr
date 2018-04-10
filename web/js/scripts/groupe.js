@@ -10,22 +10,26 @@ $(document).ready(function(){
             objChild = $("#groupe"+id);
             (function(count, id){
                 count = count - ((Math.floor(Date.now() / 1000)) - launchedAt);
-                counter = setInterval(function() {
-                    count = count - 1;
-                    if (count < 0) {
-                        clearInterval(counter);
-                        $("#timer"+id).html("0:0:0");
-                        return;
-                    }
-                
-                    var seconds = count % 60;
-                    var minutes = Math.floor(count / 60);
-                    var hours = Math.floor(minutes / 60);
-                    minutes %= 60;
-                    hours %= 60;
-                    $("#timer"+id).html(hours+":"+minutes+":"+seconds);
-                }, 1000)
-                
+                if($("#groupe"+id).children(".statut") == "Activé") {
+
+                    counter = setInterval(function() {
+                        count = count - 1;
+                        if (count < 0) {
+                            clearInterval(counter);
+                            $("#timer"+id).html("0:0:0");
+                            return;
+                        }
+                        
+                        var seconds = count % 60;
+                        var minutes = Math.floor(count / 60);
+                        var hours = Math.floor(minutes / 60);
+                        minutes %= 60;
+                        hours %= 60;
+                        
+                        $("#timer"+id).html(hours+":"+minutes+":"+seconds);
+                    }, 1000)
+                    
+                }
             })(count, id)
             
             $("#groupe"+id).children(".action").children("button").addClass("disabled");

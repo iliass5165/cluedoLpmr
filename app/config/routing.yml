@@ -37,3 +37,8 @@ element_get_indice:
     path: /api/elements/{name}
     defaults: { _controller: "LpmrAppBundle:Element:getIndice" }
     methods: GET
+
+get_apk:
+    path: /apk
+    defaults: { _controller: "LpmrAppBundle:Default:getApk" }
+    methods: GET

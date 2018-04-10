@@ -26,6 +26,7 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/js/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/apk, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/element/api/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/element/indice/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /, role: ROLE_USER }

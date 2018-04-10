@@ -277,7 +277,7 @@ class ElementController extends Controller
             {
                 if($element->getFkCategorieElement()->getNom() != "Faux indices")
                 {    
-                    $object = ["id" => $element->getId(),"name" => $element->getNom(), "category" => $element->getFkCategorieElement()->getNom()];
+                    $object = ["id" => $element->getId(),"name" => $element->getNom(), "category" => $element->getFkCategorieElement()->getNom(), 'checked' => false];
                     $arrayOfElements[] = $object;
                 }
             }
