@@ -49,7 +49,7 @@ $(document).ready(function(){
     })()
     
     
-    $(".launchButton").on("click", function(){
+    $("body").delegate(".launchButton", "click", function(){
         var clickedElement = $(this);
         var groupe = $(this).closest("tr");
         var groupeId = groupe.data("id");
