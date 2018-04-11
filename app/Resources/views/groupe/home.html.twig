@@ -24,7 +24,7 @@
         {% set counterCrime = 0 %}
         {% for ge in groupe.groupeElement %}
             {% if ge.scanned %}
-            {% if not ge.element.usedInCrime %} 
+            {% if  ge.element.usedInCrime %} 
                 {% set counterCrime = counterCrime + 1 %}
              {% endif %}
                 {% set counterScanned = counterScanned + 1 %}
