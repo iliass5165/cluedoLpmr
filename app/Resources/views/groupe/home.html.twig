@@ -10,7 +10,8 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Avancement</th>
+                <th>Code</th>
+                <th>Nb scan</th>
                 <th>indice de crime</th>
                 <th>Nb point</th>
                 <th>Statut</th>
@@ -23,10 +24,10 @@
         {% set counterScanned = 0 %}
         {% set counterCrime = 0 %}
         {% for ge in groupe.groupeElement %}
-            {% if ge.scanned %}
             {% if  ge.element.usedInCrime %} 
                 {% set counterCrime = counterCrime + 1 %}
              {% endif %}
+            {% if ge.scanned %}
                 {% set counterScanned = counterScanned + 1 %}
             {% endif %}
             
@@ -37,6 +38,7 @@
                     <input type="hidden" value="{{groupe.id}}" data-launchedAt="{{groupe.launchedAt}}">
                 {% endif %}
                 <td> {{groupe.nom}} </td>
+                <td> {{groupe.code}} </td>
                 <td class="avancement"> {{counterScanned}} / {{elements | length - 2}}</td>
                 <td> {{counterCrime}} / 3</td>
                 <td class="nbPoint">{{groupe.nbPointGlobal}}</td>
